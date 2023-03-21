@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import Pages from "./pages/Pages";
+import axios from "axios";
+import { useUser } from "./hooks/UseUser";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { Box } from "@mui/material";
+//import { ErrorProvider } from "./context/ErrorProvider";
 
 function App() {
+const { getToken} = useUser();
+const token = getToken();
+
+  useEffect(() => {
+     axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  }, [token]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <ErrorProvider> */}
+      <BrowserRouter>
+        <Header/>
+        <Box sx={{
+          minHeight: "calc(100vh - 56px - 32px - 80px)"
+        }}>
+          <Pages />
+        </Box>
+        <Footer/>
+      </BrowserRouter>
+      {/* </ErrorProvider> */}
     </div>
   );
 }
