@@ -15,32 +15,32 @@ import {
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useVisitees } from "../../hooks/UseVisitees";
+import { useAdmins } from "../../hooks/UseAdmins";
 import { useNavigate } from "react-router-dom";
-//import { useError } from "../../context/UseError";
+import { useError } from "../../context/UseError";
 
-const Visitees = () => {
-  //const { setError: setHeaderError } = useError();
-  const { getVisitees, deleteVisitee } = useVisitees();
+const Admins = () => {
+  const { setError: setHeaderError } = useError();
+  const { getAdmins, deleteAdmin } = useAdmins();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
-  const [visitees, setVisitees] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [valuesChanged, setValuesChanged] = useState(true);
   const [dialogOpenId, setDialogOpenId] = useState(-1);
   const navigate = useNavigate();
 
   useEffect(() => {
     setValuesChanged(false);
-    handleGetVisitees();
+    handleGetAdmins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valuesChanged]);
 
-  const handleGetVisitees = async () => {
+  const handleGetAdmins = async () => {
     //e.preventDefault();
     try {
       setIsLoading(true);
-      //setHeaderError(null);
-      setVisitees(await getVisitees());
+      setHeaderError(null);
+      setAdmins(await getAdmins());
     } catch (err) {
       console.log(err);
       //setHeaderError(err.response.data);
@@ -57,11 +57,11 @@ const Visitees = () => {
     setDialogOpenId(-1);
   };
 
-  const handleDeleteVisitee = async (visiteeId) => {
+  const handleDeleteAdmin = async (adminId) => {
     try {
       setDialogOpenId(-1);
       setIsLoading(true);
-      await deleteVisitee(visiteeId);
+      await deleteAdmin(adminId);
       setValuesChanged(true);
     } catch (err) {
       console.log(err);
@@ -84,7 +84,7 @@ const Visitees = () => {
           overflowX: "hidden",
         }}
       >
-        <Typography variant="h5">Visitable Empolyee list</Typography>
+        <Typography variant="h5">Administrator list</Typography>
         <TableContainer
           component={Paper}
           sx={{
@@ -99,23 +99,23 @@ const Visitees = () => {
                 <TableCell>ID</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Role</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {visitees.map((item) => {
+              {admins.map((item) => {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.email}</TableCell>
-                    <TableCell>{item.status}</TableCell>
+                    <TableCell>{item.role}</TableCell>
                     <TableCell>
                       <Button
                         onClick={() => {
-                          navigate("/visitees/" + item.id);
+                          navigate("/admins/" + item.id);
                         }}
                       >
                         Edit
@@ -136,13 +136,13 @@ const Visitees = () => {
                         aria-describedby="alert-dialog-description"
                       >
                         <DialogTitle id="alert-dialog-title">
-                          {`Are you sure you ant to delete employee ${item.name}`}
+                          {`Are you sure you ant to delete administrator ${item.name}`}
                         </DialogTitle>
                         <DialogActions>
                           <Button onClick={() => handleCloseDialog()}>
                             No
                           </Button>
-                          <Button onClick={() => handleDeleteVisitee(item.id)}>
+                          <Button onClick={() => handleDeleteAdmin(item.id)}>
                             Yes
                           </Button>
                         </DialogActions>
@@ -157,14 +157,14 @@ const Visitees = () => {
         <Button
           variant="contained"
           onClick={() => {
-            navigate("/visitees/add");
+            navigate("/admins/add");
           }}
         >
-          Add new visitable employee
+          Add new administrator
         </Button>
       </Stack>
     </Box>
   );
 };
 
-export default Visitees;
+export default Admins;

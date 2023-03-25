@@ -1,8 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Alert } from "@mui/material";
+import { useError } from "../context/UseError";
 
 export default function Footer() {
+  const { error } = useError();
+
   return (
     <Box sx={{ paddingTop: 5 }}>
+      {error && <Alert severity="error">{error}</Alert>}
       <Box
         sx={{
           bgcolor: "#0b0163",

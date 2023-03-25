@@ -7,8 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { useUser } from "../hooks/UseUser";
 import { useNavigate } from "react-router-dom";
-import { Alert, Divider, Drawer } from "@mui/material";
-//import { useError } from "../context/UseError";
+import { Divider, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/system";
 
@@ -21,7 +20,6 @@ export default function Header() {
     setMobileOpen(!mobileOpen);
   };
 
-  //const { error } = useError();
   const { getUser } = useUser();
   const navigate = useNavigate();
 
@@ -33,6 +31,7 @@ export default function Header() {
   } else if (["super"].includes(userRole)) {
     links = [
       { key: "Visitees", value: "/visitees" },
+      { key: "Administrators", value: "/admins" },
       { key: "Logout", value: "/logout" },
     ];
   } else if (["regular"].includes(userRole)) {
@@ -122,7 +121,6 @@ export default function Header() {
           })}
         </Toolbar>
       </AppBar>
-      {/* {error && <Alert severity="error">{error}</Alert>} */}
     </Box>
   );
 }
