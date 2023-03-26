@@ -33,11 +33,13 @@ export default function Header() {
       { key: "Visitees", value: "/visitees" },
       { key: "Administrators", value: "/admins" },
       { key: "Documents", value: "/documents" },
+      { key: "Forms", value: "/forms" },
       { key: "Logout", value: "/logout" },
     ];
   } else if (["regular"].includes(userRole)) {
     links = [
       { key: "Visitees", value: "/visitees" },
+      { key: "Forms", value: "/forms" },
       { key: "Logout", value: "/logout" },
     ];
   } else {

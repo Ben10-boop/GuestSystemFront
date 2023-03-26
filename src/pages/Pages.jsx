@@ -14,6 +14,8 @@ import EditAdmin from "./admins/EditAdmin";
 import Documents from "./documents/Documents";
 import AddDocument from "./documents/AddDocument";
 import EditDocument from "./documents/EditDocument";
+import Forms from "./forms/Forms";
+import AddForm from "./forms/AddForm";
 
 function Pages() {
   const { setError } = useError();
@@ -110,6 +112,22 @@ function Pages() {
         element={
           <ProtectedPage roles={["super"]}>
             <EditDocument />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/forms"
+        element={
+          <ProtectedPage roles={["super", "regular"]}>
+            <Forms />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/forms/add"
+        element={
+          <ProtectedPage roles={["super", "regular"]}>
+            <AddForm />
           </ProtectedPage>
         }
       />
