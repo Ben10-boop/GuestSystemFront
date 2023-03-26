@@ -32,6 +32,7 @@ export default function Header() {
     links = [
       { key: "Visitees", value: "/visitees" },
       { key: "Administrators", value: "/admins" },
+      { key: "Documents", value: "/documents" },
       { key: "Logout", value: "/logout" },
     ];
   } else if (["regular"].includes(userRole)) {

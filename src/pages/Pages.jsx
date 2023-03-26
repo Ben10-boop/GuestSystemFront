@@ -11,6 +11,9 @@ import EditVisitee from "./visitees/EditVisitee";
 import Admins from "./admins/Admins";
 import AddAdmin from "./admins/AddAdmin";
 import EditAdmin from "./admins/EditAdmin";
+import Documents from "./documents/Documents";
+import AddDocument from "./documents/AddDocument";
+import EditDocument from "./documents/EditDocument";
 
 function Pages() {
   const { setError } = useError();
@@ -83,6 +86,30 @@ function Pages() {
         element={
           <ProtectedPage roles={["super"]}>
             <EditAdmin />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/documents"
+        element={
+          <ProtectedPage roles={["super"]}>
+            <Documents />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/documents/add"
+        element={
+          <ProtectedPage roles={["super"]}>
+            <AddDocument />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/documents/:identifier"
+        element={
+          <ProtectedPage roles={["super"]}>
+            <EditDocument />
           </ProtectedPage>
         }
       />

@@ -136,7 +136,7 @@ const Admins = () => {
                         aria-describedby="alert-dialog-description"
                       >
                         <DialogTitle id="alert-dialog-title">
-                          {`Are you sure you ant to delete administrator ${item.name}`}
+                          {`Are you sure you ant to delete administrator "${item.name}"`}
                         </DialogTitle>
                         <DialogActions>
                           <Button onClick={() => handleCloseDialog()}>
