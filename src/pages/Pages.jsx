@@ -16,6 +16,7 @@ import AddDocument from "./documents/AddDocument";
 import EditDocument from "./documents/EditDocument";
 import Forms from "./forms/Forms";
 import AddForm from "./forms/AddForm";
+import EditForm from "./forms/EditForm";
 
 function Pages() {
   const { setError } = useError();
@@ -128,6 +129,14 @@ function Pages() {
         element={
           <ProtectedPage roles={["super", "regular"]}>
             <AddForm />
+          </ProtectedPage>
+        }
+      />
+      <Route
+        path="/forms/:identifier"
+        element={
+          <ProtectedPage roles={["super", "regular"]}>
+            <EditForm />
           </ProtectedPage>
         }
       />

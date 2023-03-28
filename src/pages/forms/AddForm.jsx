@@ -15,7 +15,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useForms } from "../../hooks/UseForms";
 import { useVisitees } from "../../hooks/UseVisitees";
-import { format } from "date-fns";
 //import { useError } from "../../context/UseError";
 
 const AddForm = () => {
@@ -68,26 +67,33 @@ const AddForm = () => {
   };
 
   const handleCheckBoxTick = (e) => {
-    // const departHour =
-    //   departureTimeHour < 10 ? `0${departureTimeHour}` : `${departureTimeHour}`;
-    // const departMinute =
-    //   departureTimeMinute < 10
-    //     ? `0${departureTimeMinute}`
-    //     : `${departureTimeMinute}`;
-    // const someDate = `${departureTimeDate}T${departHour}:${departMinute}`;
-    //console.log(someDate);
-    //console.log(format(new Date(someDate), "MM-dd HH:mm"));
-    //console.log(e.target.checked);
     setChecked(e.target.checked);
   };
 
   const handleAddForm = async (e) => {
     e.preventDefault();
-    if ([!emailRegEx.test(email)].includes(true)) {
+    if (
+      [
+        checked && !emailRegEx.test(email),
+        email !== "" && !emailRegEx.test(email),
+      ].includes(true)
+    ) {
       setError(true);
       return;
     }
-    if ([name, purpose].includes("")) {
+    if (
+      [
+        name,
+        purpose,
+        entranceTimeDate,
+        entranceTimeHour,
+        entranceTimeMinute,
+        departureTimeDate,
+        departureTimeHour,
+        departureTimeMinute,
+        visiteeId,
+      ].includes("")
+    ) {
       setEmptyError(true);
       return;
     }
@@ -130,19 +136,19 @@ const AddForm = () => {
               <Typography variant="h5">
                 Add new Guest form submission
               </Typography>
-              <InputLabel>Guest name</InputLabel>
+              <InputLabel>Guest name*</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>Visit purpose</InputLabel>
+              <InputLabel>Visit purpose*</InputLabel>
               <TextField
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
               />
-              <InputLabel>Entrance time (Date; Hour; Minute)</InputLabel>
+              <InputLabel>Entrance time (Date; Hour; Minute)*</InputLabel>
               <Box display="flex">
                 <TextField
                   sx={{
@@ -183,7 +189,7 @@ const AddForm = () => {
                   })}
                 </Select>
               </Box>
-              <InputLabel>Departure time (Date; Hour; Minute)</InputLabel>
+              <InputLabel>Departure time (Date; Hour; Minute)*</InputLabel>
               <Box display="flex">
                 <TextField
                   sx={{
@@ -224,7 +230,7 @@ const AddForm = () => {
                   })}
                 </Select>
               </Box>
-              <InputLabel>Employee being visited</InputLabel>
+              <InputLabel>Employee being visited*</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={visiteeId}
@@ -250,16 +256,23 @@ const AddForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error && !emailRegEx.test(email) ? (
+              {error && checked && email === "" ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  Please enter your email address if you need wifi access
+                </label>
+              ) : (
+                ""
+              )}
+              {error && checked && email !== "" && !emailRegEx.test(email) ? (
+                <label style={{ color: "#f44336" }}>
+                  Please enter a valid email address
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  All fields are required
+                  Fields marked with "*" are required
                 </label>
               ) : (
                 ""
