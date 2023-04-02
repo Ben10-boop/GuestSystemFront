@@ -8,6 +8,11 @@ export const useDocuments = () => {
     return response.data;
   };
 
+  const getActiveDocuments = async () => {
+    const response = await axios.get(API_URL + "/Active");
+    return response.data;
+  };
+
   const getDocument = async (id) => {
     const response = await axios.get(API_URL + `/${id}`);
     return response.data;
@@ -41,6 +46,7 @@ export const useDocuments = () => {
 
   return {
     getDocuments,
+    getActiveDocuments,
     getDocument,
     postDocument,
     putDocument,

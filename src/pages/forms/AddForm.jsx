@@ -258,7 +258,7 @@ const AddForm = () => {
               />
               {error && checked && email === "" ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter your email address if you need wifi access
+                  Please enter the email address if wifi access is needed
                 </label>
               ) : (
                 ""

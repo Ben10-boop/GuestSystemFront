@@ -27,7 +27,11 @@ export default function Header() {
   const userRole =
     getUser()?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
   if (!userRole) {
-    links = [{ key: "Administrator login", value: "/login" }];
+    links = [
+      { key: "Submit Form", value: "forms/guestadd" },
+      { key: "Home", value: "/" },
+      { key: "Administrator login", value: "/login" },
+    ];
   } else if (["super"].includes(userRole)) {
     links = [
       { key: "Visitees", value: "/visitees" },

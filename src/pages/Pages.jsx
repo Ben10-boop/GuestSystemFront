@@ -17,6 +17,8 @@ import EditDocument from "./documents/EditDocument";
 import Forms from "./forms/Forms";
 import AddForm from "./forms/AddForm";
 import EditForm from "./forms/EditForm";
+import GuestHome from "./GuestHome";
+import AddFormByGuest from "./forms/AddFormByGuest";
 
 function Pages() {
   const { setError } = useError();
@@ -28,6 +30,7 @@ function Pages() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<GuestHome />} />
       <Route
         path="/logout"
         element={
@@ -37,7 +40,7 @@ function Pages() {
         }
       />
       <Route
-        path="/"
+        path="/home"
         element={
           <ProtectedPage roles={["super", "regular"]}>
             <Home />
@@ -140,6 +143,7 @@ function Pages() {
           </ProtectedPage>
         }
       />
+      <Route path="/forms/guestadd" element={<AddFormByGuest />} />
     </Routes>
   );
 }

@@ -46,7 +46,7 @@ const Login = () => {
           "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         ]
       );
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.log(err);
       //setHeaderError(err.response.data);

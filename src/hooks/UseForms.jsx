@@ -61,6 +61,12 @@ export const useForms = () => {
     return response.data;
   };
 
+  const getFormDocuments = async (id) => {
+    const response = await axios.get(API_URL + `/${id}/Documents`);
+    console.log(response.data);
+    return response.data;
+  };
+
   const deleteForm = async (id) => {
     const response = await axios.delete(API_URL + `/${id}`);
     console.log(response.data);
@@ -72,6 +78,7 @@ export const useForms = () => {
     getForm,
     postForm,
     putForm,
+    getFormDocuments,
     deleteForm,
   };
 };
