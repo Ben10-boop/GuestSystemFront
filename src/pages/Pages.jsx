@@ -19,6 +19,7 @@ import AddForm from "./forms/AddForm";
 import EditForm from "./forms/EditForm";
 import GuestHome from "./GuestHome";
 import AddFormByGuest from "./forms/AddFormByGuest";
+import EndVisit from "./forms/EndVisit";
 
 function Pages() {
   const { setError } = useError();
@@ -144,6 +145,7 @@ function Pages() {
         }
       />
       <Route path="/forms/guestadd" element={<AddFormByGuest />} />
+      <Route path="/forms/endvisit" element={<EndVisit />} />
     </Routes>
   );
 }

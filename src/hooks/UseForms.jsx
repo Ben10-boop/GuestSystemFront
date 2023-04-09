@@ -63,13 +63,31 @@ export const useForms = () => {
 
   const getFormDocuments = async (id) => {
     const response = await axios.get(API_URL + `/${id}/Documents`);
-    console.log(response.data);
     return response.data;
   };
 
+  const getActiveGuests = async () => {
+    const response = await axios.get(API_URL + `/ActiveGuests`);
+    return response.data;
+  }
+
+  const getActiveForms = async () => {
+    const response = await axios.get(API_URL + `/Active`);
+    return response.data;
+  }
+
+  const getRecentForms = async () => {
+    const response = await axios.get(API_URL + `/Recent`);
+    return response.data;
+  }
+
   const deleteForm = async (id) => {
     const response = await axios.delete(API_URL + `/${id}`);
-    console.log(response.data);
+    return response.data;
+  };
+
+  const endVisit = async (id) => {
+    const response = await axios.patch(API_URL + `/${id}/EndVisit`);
     return response.data;
   };
 
@@ -79,6 +97,10 @@ export const useForms = () => {
     postForm,
     putForm,
     getFormDocuments,
+    getActiveGuests,
+    getActiveForms,
     deleteForm,
+    getRecentForms,
+    endVisit,
   };
 };

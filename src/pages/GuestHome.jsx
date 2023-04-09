@@ -6,14 +6,30 @@ const GuestHome = () => {
 
   return (
     <Box>
-      <Box sx={{ height: "70vh" }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button
           variant="contained"
           onClick={() => {
             navigate("/forms/guestadd");
           }}
+          sx={{
+            margin: 10,
+            padding: 5
+          }}
         >
           Submit Entrance form
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/forms/endvisit");
+          }}
+          sx={{
+            margin: 10,
+
+          }}
+        >
+          End visit
         </Button>
       </Box>
     </Box>

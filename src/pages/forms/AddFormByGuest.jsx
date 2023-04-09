@@ -16,12 +16,14 @@ import {
   DialogActions,
   Pagination,
   Button,
+  Alert,
 } from "@mui/material";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "../../PdfStyle.css";
 import { useNavigate } from "react-router-dom";
+import { addMinutes, addHours } from "date-fns";
 import { useForms } from "../../hooks/UseForms";
 import { useVisitees } from "../../hooks/UseVisitees";
 import { useDocuments } from "../../hooks/UseDocuments";
@@ -51,9 +53,14 @@ const AddFormByGuest = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [dialogOpenId, setDialogOpenId] = useState(-1);
   const [signDialogOpen, setSignDialogOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
   const canvasRef = useRef(null);
   const navigate = useNavigate();
   const emailRegEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+}
 
   useEffect(() => {
     setVisiteeValuesChanged(false);
@@ -148,22 +155,21 @@ const AddFormByGuest = () => {
   const handleAddForm = async () => {
     try {
       setIsLoading(true);
+      const EntranceDate = new Date(Date.now());
       //setHeaderError(null);
       await postForm(
         name,
         email,
         purpose,
         canvasRef.current.canvasContainer.children[1].toDataURL(),
-        Date.now().toUTCString,
-        (
-          Date.now() +
-          departureTimeHour * 60 * 60 * 1000 +
-          departureTimeMinute * 60 * 1000
-        ).toUTCString,
+        EntranceDate.toJSON(),
+        addMinutes(addHours(EntranceDate, departureTimeHour), departureTimeMinute).toJSON(),
         visiteeId,
         checked ? "granted" : "not requested"
       );
       setSignDialogOpen(false);
+      setSuccess(true);
+      await timeout(5000);
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -355,27 +361,32 @@ const AddFormByGuest = () => {
                   >
                     Cancel
                   </Button>
-                  <Button
+                  <LoadingButton
                     variant="contained"
+                    loading={isLoading}
                     type="button"
                     onClick={() => handleAddForm()}
                   >
                     Submit
-                  </Button>
+                  </LoadingButton>
                 </DialogActions>
               </Dialog>
-              <LoadingButton
+              <Button
                 variant="contained"
-                loading={isLoading}
                 type="button"
                 onClick={() => hadleOpenSignDialog()}
               >
                 Sign form
-              </LoadingButton>
+              </Button>
             </Stack>
           </form>
         </Box>
       </Paper>
+      {success ? (
+                <Alert sx={{ marginTop: 3 }} severity="success">SUBMISSION SAVED SUCCESSFULLY!</Alert>
+              ) : (
+                ""
+              )}
     </Container>
   );
 };

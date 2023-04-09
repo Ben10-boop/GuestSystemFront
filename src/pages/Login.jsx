@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/UseAuth";
-import { useUser } from "../hooks/UseUser";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -17,7 +16,6 @@ import {
 const Login = () => {
   //const { setError: setHeaderError } = useError();
   const { login } = useAuth();
-  const { getUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +39,6 @@ const Login = () => {
       setIsLoading(true);
       //setHeaderError(null);
       await login(email, password);
-      console.log(
-        getUser()[
-          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-        ]
-      );
       navigate("/home");
     } catch (err) {
       console.log(err);

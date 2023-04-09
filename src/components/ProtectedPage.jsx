@@ -8,6 +8,9 @@ export const ProtectedPage = ({ children, roles }) => {
   if (!getUser()) {
     return <Navigate to="/login" />;
   }
+  if (Number(getUser()["http://schemas.microsoft.com/ws/2008/06/identity/claims/expiration"]) < Date.now()){
+    return <Navigate to="/login" />;
+  }
 
   //Authorization
   if (

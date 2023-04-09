@@ -12,9 +12,6 @@ export const useAuth = () => {
       email,
       password,
     });
-    console.log(response.data);
-
-    //for logout delete from localStorage and axios default
     setToken(response.data);
     axios.defaults.headers.common["Authorization"] = `bearer ${response.data}`;
 
