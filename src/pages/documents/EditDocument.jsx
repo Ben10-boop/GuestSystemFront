@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDocuments } from "../../hooks/UseDocuments";
+import { useTranslation } from "react-i18next";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
@@ -22,6 +23,7 @@ import "../../PdfStyle.css";
 
 const EditDocument = () => {
   const { putDocument, getDocument } = useDocuments();
+  const { t } = useTranslation();
   const [details, setDetails] = useState({});
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
@@ -106,15 +108,19 @@ const EditDocument = () => {
             <form onSubmit={handleEditDocument}>
               <Stack spacing={2}>
                 <Typography variant="h5">
-                  View, edit document {params.identifier}
+                  {t("view_edit_document")} {params.identifier}
                 </Typography>
-                <InputLabel>Title : {details["title"]}</InputLabel>
+                <InputLabel>
+                  {t("title")} : {details["title"]}
+                </InputLabel>
                 <TextField
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <InputLabel>Status : {details["status"]}</InputLabel>
+                <InputLabel>
+                  {t("status")} : {details["status"]}
+                </InputLabel>
                 <Select
                   id="statusSelectThing"
                   value={status}
@@ -123,9 +129,7 @@ const EditDocument = () => {
                   <MenuItem value={"active"}>Active</MenuItem>
                   <MenuItem value={"inactive"}>Inactive</MenuItem>
                 </Select>
-                <InputLabel>
-                  Content: (Preview current content below)
-                </InputLabel>
+                <InputLabel>{t("doc_content_expl")}</InputLabel>
                 <input
                   type="file"
                   name="file"
@@ -134,7 +138,7 @@ const EditDocument = () => {
                 />
                 {error && uplFile.type !== "application/pdf" ? (
                   <label style={{ color: "#f44336" }}>
-                    Uploaded file must be in .pdf format
+                    {t("err_file_must_be_pdf")}
                   </label>
                 ) : (
                   ""
@@ -144,7 +148,7 @@ const EditDocument = () => {
                   loading={isLoading}
                   type="submit"
                 >
-                  Submit
+                  {t("submit")}
                 </LoadingButton>
               </Stack>
             </form>

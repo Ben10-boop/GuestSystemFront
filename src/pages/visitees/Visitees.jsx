@@ -17,11 +17,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useVisitees } from "../../hooks/UseVisitees";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 //import { useError } from "../../context/UseError";
 
 const Visitees = () => {
   //const { setError: setHeaderError } = useError();
   const { getVisitees, deleteVisitee } = useVisitees();
+  const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [visitees, setVisitees] = useState([]);
@@ -84,7 +86,7 @@ const Visitees = () => {
           overflowX: "hidden",
         }}
       >
-        <Typography variant="h5">Visitable Empolyee list</Typography>
+        <Typography variant="h5">{t("visitee_list")}</Typography>
         <TableContainer
           component={Paper}
           sx={{
@@ -97,9 +99,9 @@ const Visitees = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>{t("name")}</TableCell>
+                <TableCell>{t("email")}</TableCell>
+                <TableCell>{t("status")}</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -118,7 +120,7 @@ const Visitees = () => {
                           navigate("/visitees/" + item.id);
                         }}
                       >
-                        Edit
+                        {t("edit")}
                       </Button>
                     </TableCell>
                     <TableCell>
@@ -127,7 +129,7 @@ const Visitees = () => {
                           handleOpenDialog(item.id);
                         }}
                       >
-                        Delete
+                        {t("delete")}
                       </Button>
                       <Dialog
                         open={dialogOpenId === item.id}
@@ -136,14 +138,15 @@ const Visitees = () => {
                         aria-describedby="alert-dialog-description"
                       >
                         <DialogTitle id="alert-dialog-title">
-                          {`Are you sure you ant to delete employee "${item.name}"`}
+                          {t("delete_dialog_conf")}
+                          {` "${item.name}"?`}
                         </DialogTitle>
                         <DialogActions>
                           <Button onClick={() => handleCloseDialog()}>
-                            No
+                            {t("no")}
                           </Button>
                           <Button onClick={() => handleDeleteVisitee(item.id)}>
-                            Yes
+                            {t("yes")}
                           </Button>
                         </DialogActions>
                       </Dialog>
@@ -160,7 +163,7 @@ const Visitees = () => {
             navigate("/visitees/add");
           }}
         >
-          Add new visitable employee
+          {t("add_visitee")}
         </Button>
       </Stack>
     </Box>

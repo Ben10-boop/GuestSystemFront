@@ -1,8 +1,11 @@
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const GuestHome = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  //   {t("")}
 
   return (
     <Box>
@@ -14,10 +17,10 @@ const GuestHome = () => {
           }}
           sx={{
             margin: 10,
-            padding: 5
+            padding: 5,
           }}
         >
-          Submit Entrance form
+          {t("begin_visit")}
         </Button>
         <Button
           variant="contained"
@@ -26,10 +29,9 @@ const GuestHome = () => {
           }}
           sx={{
             margin: 10,
-
           }}
         >
-          End visit
+          {t("end_visit")}
         </Button>
       </Box>
     </Box>

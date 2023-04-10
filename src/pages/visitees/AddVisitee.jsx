@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -16,6 +17,7 @@ import { useVisitees } from "../../hooks/UseVisitees";
 const AddVisitee = () => {
   //const { setError: setHeaderError } = useError();
   const { postVisitee } = useVisitees();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,14 +59,14 @@ const AddVisitee = () => {
         >
           <form onSubmit={handleAddVisitee}>
             <Stack spacing={2}>
-              <Typography variant="h5">Add new visitable employee</Typography>
-              <InputLabel>Name</InputLabel>
+              <Typography variant="h5">{t("add_visitee")}</Typography>
+              <InputLabel>{t("name")}</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel id="maxPayloadInput">Email</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -72,14 +74,14 @@ const AddVisitee = () => {
               />
               {error && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  All fields are required
+                  {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
@@ -89,7 +91,7 @@ const AddVisitee = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

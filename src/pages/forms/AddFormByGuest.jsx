@@ -27,6 +27,7 @@ import { addMinutes, addHours } from "date-fns";
 import { useForms } from "../../hooks/UseForms";
 import { useVisitees } from "../../hooks/UseVisitees";
 import { useDocuments } from "../../hooks/UseDocuments";
+import { useTranslation } from "react-i18next";
 import CanvasDraw from "react-canvas-draw";
 //import { useError } from "../../context/UseError";
 
@@ -35,6 +36,7 @@ const AddFormByGuest = () => {
   const { postForm } = useForms();
   const { getVisitees } = useVisitees();
   const { getActiveDocuments } = useDocuments();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -59,8 +61,8 @@ const AddFormByGuest = () => {
   const emailRegEx = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 
   function timeout(delay) {
-    return new Promise( res => setTimeout(res, delay) );
-}
+    return new Promise((res) => setTimeout(res, delay));
+  }
 
   useEffect(() => {
     setVisiteeValuesChanged(false);
@@ -163,7 +165,10 @@ const AddFormByGuest = () => {
         purpose,
         canvasRef.current.canvasContainer.children[1].toDataURL(),
         EntranceDate.toJSON(),
-        addMinutes(addHours(EntranceDate, departureTimeHour), departureTimeMinute).toJSON(),
+        addMinutes(
+          addHours(EntranceDate, departureTimeHour),
+          departureTimeMinute
+        ).toJSON(),
         visiteeId,
         checked ? "granted" : "not requested"
       );
@@ -189,22 +194,20 @@ const AddFormByGuest = () => {
         >
           <form onSubmit={handleAddForm}>
             <Stack spacing={2}>
-              <Typography variant="h5">
-                Add new Guest form submission
-              </Typography>
-              <InputLabel>Guest name*</InputLabel>
+              <Typography variant="h5">{t("add_new_guest_form")}</Typography>
+              <InputLabel>{t("name")}*</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>Visit purpose*</InputLabel>
+              <InputLabel>{t("purpose")}*</InputLabel>
               <TextField
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
               />
-              <InputLabel>Planned visit duration (Hours; minutes)*</InputLabel>
+              <InputLabel>{t("planned_duration")}*</InputLabel>
               <Box display="flex">
                 <Select
                   sx={{
@@ -221,7 +224,7 @@ const AddFormByGuest = () => {
                     );
                   })}
                 </Select>
-                <InputLabel>h</InputLabel>
+                <InputLabel>{t("h")}</InputLabel>
                 <Select
                   sx={{
                     margin: "2px",
@@ -242,7 +245,7 @@ const AddFormByGuest = () => {
                 </Select>
                 <InputLabel>min</InputLabel>
               </Box>
-              <InputLabel>Employee being visited*</InputLabel>
+              <InputLabel>{t("empl_being_visited")}*</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={visiteeId}
@@ -256,13 +259,13 @@ const AddFormByGuest = () => {
                   );
                 })}
               </Select>
-              <InputLabel id="maxPayloadInput">Grant wifi access</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
               <Checkbox
                 checked={checked}
                 onChange={handleCheckBoxTick}
                 inputProps={{ "aria-label": "controlled" }}
               />
-              <InputLabel id="maxPayloadInput">Email</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -270,26 +273,26 @@ const AddFormByGuest = () => {
               />
               {error && checked && email === "" ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter the email address if wifi access is needed
+                  {t("err_email_req_if_wifi")}
                 </label>
               ) : (
                 ""
               )}
               {error && checked && email !== "" && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email address
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  Fields marked with "*" are required
+                  {t("err_fields_with_star_req")}
                 </label>
               ) : (
                 ""
               )}
-              <InputLabel>View additional documents:</InputLabel>
+              <InputLabel>{t("view_add_docs")}:</InputLabel>
               <div className="Example__container">
                 <div className="Example__container__document">
                   {documents.map((item) => {
@@ -333,7 +336,7 @@ const AddFormByGuest = () => {
                           </Box>
                           <DialogActions>
                             <Button onClick={() => handleCloseDialog()}>
-                              Close
+                              {t("close")}
                             </Button>
                           </DialogActions>
                         </Dialog>
@@ -350,7 +353,7 @@ const AddFormByGuest = () => {
                 maxWidth="xl"
               >
                 <DialogTitle id="alert-dialog-title">
-                  Draw your signature on the canvas below
+                  {t("draw_signature")}
                 </DialogTitle>
                 <CanvasDraw ref={canvasRef} />
                 <DialogActions>
@@ -359,7 +362,7 @@ const AddFormByGuest = () => {
                     type="button"
                     onClick={() => hadleCloseSignDialog()}
                   >
-                    Cancel
+                    {t("cancel")}
                   </Button>
                   <LoadingButton
                     variant="contained"
@@ -367,7 +370,7 @@ const AddFormByGuest = () => {
                     type="button"
                     onClick={() => handleAddForm()}
                   >
-                    Submit
+                    {t("submit")}
                   </LoadingButton>
                 </DialogActions>
               </Dialog>
@@ -376,17 +379,19 @@ const AddFormByGuest = () => {
                 type="button"
                 onClick={() => hadleOpenSignDialog()}
               >
-                Sign form
+                {t("sign_form")}
               </Button>
             </Stack>
           </form>
         </Box>
       </Paper>
       {success ? (
-                <Alert sx={{ marginTop: 3 }} severity="success">SUBMISSION SAVED SUCCESSFULLY!</Alert>
-              ) : (
-                ""
-              )}
+        <Alert sx={{ marginTop: 3 }} severity="success">
+          {t("alert_sub_save_success")}SUBMISSION SAVED SUCCESSFULLY!
+        </Alert>
+      ) : (
+        ""
+      )}
     </Container>
   );
 };

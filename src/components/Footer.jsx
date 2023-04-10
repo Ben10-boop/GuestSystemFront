@@ -1,8 +1,10 @@
 import { Box, Typography, Alert } from "@mui/material";
 import { useError } from "../context/UseError";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
   const { error } = useError();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ paddingTop: 5 }}>
@@ -22,7 +24,7 @@ export default function Footer() {
           sx={{ flexGrow: 1, marginLeft: 5 }}
           color="#7567eb"
         >
-          Guest Registration System 2023
+          {t("guest_reg_system")}
         </Typography>
       </Box>
     </Box>

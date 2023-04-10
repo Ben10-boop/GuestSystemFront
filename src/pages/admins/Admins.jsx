@@ -18,10 +18,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useAdmins } from "../../hooks/UseAdmins";
 import { useNavigate } from "react-router-dom";
 import { useError } from "../../context/UseError";
+import { useTranslation } from "react-i18next";
 
 const Admins = () => {
   const { setError: setHeaderError } = useError();
   const { getAdmins, deleteAdmin } = useAdmins();
+  const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [admins, setAdmins] = useState([]);
@@ -84,7 +86,7 @@ const Admins = () => {
           overflowX: "hidden",
         }}
       >
-        <Typography variant="h5">Administrator list</Typography>
+        <Typography variant="h5">{t("admin_list")}</Typography>
         <TableContainer
           component={Paper}
           sx={{
@@ -97,9 +99,9 @@ const Admins = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>{t("name")}</TableCell>
+                <TableCell>{t("email")}</TableCell>
+                <TableCell>{t("role")}</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -118,7 +120,7 @@ const Admins = () => {
                           navigate("/admins/" + item.id);
                         }}
                       >
-                        Edit
+                        {t("edit")}
                       </Button>
                     </TableCell>
                     <TableCell>
@@ -127,7 +129,7 @@ const Admins = () => {
                           handleOpenDialog(item.id);
                         }}
                       >
-                        Delete
+                        {t("delete")}
                       </Button>
                       <Dialog
                         open={dialogOpenId === item.id}
@@ -136,14 +138,15 @@ const Admins = () => {
                         aria-describedby="alert-dialog-description"
                       >
                         <DialogTitle id="alert-dialog-title">
-                          {`Are you sure you ant to delete administrator "${item.name}"`}
+                          {t("delete_dialog_conf")}
+                          {` "${item.name}"?`}
                         </DialogTitle>
                         <DialogActions>
                           <Button onClick={() => handleCloseDialog()}>
-                            No
+                            {t("no")}
                           </Button>
                           <Button onClick={() => handleDeleteAdmin(item.id)}>
-                            Yes
+                            {t("yes")}
                           </Button>
                         </DialogActions>
                       </Dialog>
@@ -160,7 +163,7 @@ const Admins = () => {
             navigate("/admins/add");
           }}
         >
-          Add new administrator
+          {t("add_admin")}
         </Button>
       </Stack>
     </Box>

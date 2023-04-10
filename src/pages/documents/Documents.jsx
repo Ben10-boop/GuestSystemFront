@@ -17,9 +17,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useDocuments } from "../../hooks/UseDocuments";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Documents = () => {
   const { getDocuments, deleteDocument } = useDocuments();
+  const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [Documents, setDocuments] = useState([]);
@@ -80,7 +82,7 @@ const Documents = () => {
           overflowX: "hidden",
         }}
       >
-        <Typography variant="h5">Additional documents list</Typography>
+        <Typography variant="h5">{t("document_list")}</Typography>
         <TableContainer
           component={Paper}
           sx={{
@@ -93,8 +95,8 @@ const Documents = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>{t("title")}</TableCell>
+                <TableCell>{t("status")}</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -112,7 +114,7 @@ const Documents = () => {
                           navigate("/Documents/" + item.id);
                         }}
                       >
-                        Edit
+                        {t("edit")}
                       </Button>
                     </TableCell>
                     <TableCell>
@@ -121,7 +123,7 @@ const Documents = () => {
                           handleOpenDialog(item.id);
                         }}
                       >
-                        Delete
+                        {t("delete")}
                       </Button>
                       <Dialog
                         open={dialogOpenId === item.id}
@@ -130,14 +132,15 @@ const Documents = () => {
                         aria-describedby="alert-dialog-description"
                       >
                         <DialogTitle id="alert-dialog-title">
-                          {`Are you sure you ant to delete document "${item.title}"`}
+                          {t("delete_dialog_conf")}
+                          {` "${item.title}"?`}
                         </DialogTitle>
                         <DialogActions>
                           <Button onClick={() => handleCloseDialog()}>
-                            No
+                            {t("no")}
                           </Button>
                           <Button onClick={() => handleDeleteDocument(item.id)}>
-                            Yes
+                            {t("yes")}
                           </Button>
                         </DialogActions>
                       </Dialog>
@@ -154,7 +157,7 @@ const Documents = () => {
             navigate("/Documents/add");
           }}
         >
-          Add new document
+          {t("add_document")}
         </Button>
       </Stack>
     </Box>

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -19,6 +20,7 @@ import { useVisitees } from "../../hooks/UseVisitees";
 const EditVisitee = () => {
   //const { setError: setHeaderError } = useError();
   const { putVisitee, getVisitee } = useVisitees();
+  const { t } = useTranslation();
   const [details, setDetails] = useState({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -69,15 +71,19 @@ const EditVisitee = () => {
           <form onSubmit={handleEditVisitee}>
             <Stack spacing={2}>
               <Typography variant="h5">
-                View, edit visitable employee {params.identifier}
+                {t("view_edit_visitee")} {params.identifier}
               </Typography>
-              <InputLabel>Name : {details["name"]}</InputLabel>
+              <InputLabel>
+                {t("name")} : {details["name"]}
+              </InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>Email : {details["email"]}</InputLabel>
+              <InputLabel>
+                {t("email")} : {details["email"]}
+              </InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -85,12 +91,14 @@ const EditVisitee = () => {
               />
               {error && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
-              <InputLabel>Status : {details["status"]}</InputLabel>
+              <InputLabel>
+                {t("status")} : {details["status"]}
+              </InputLabel>
               <Select
                 id="statusSelectThing"
                 value={status}
@@ -104,7 +112,7 @@ const EditVisitee = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -15,6 +16,7 @@ import { useError } from "../../context/UseError";
 
 const AddAdmin = () => {
   const { setError: setHeaderError } = useError();
+  const { t } = useTranslation();
   const { postAdmin } = useAdmins();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,14 +65,14 @@ const AddAdmin = () => {
         >
           <form onSubmit={handleAddAdmin}>
             <Stack spacing={2}>
-              <Typography variant="h5">Add new administrator</Typography>
-              <InputLabel>Name</InputLabel>
+              <Typography variant="h5">{t("add_admin")}</Typography>
+              <InputLabel>{t("name")}</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel id="maxPayloadInput">Email</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -78,31 +80,33 @@ const AddAdmin = () => {
               />
               {error && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
-              <InputLabel>Password</InputLabel>
+              <InputLabel>{t("password")}</InputLabel>
               <TextField
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputLabel>Confirm password</InputLabel>
+              <InputLabel>{t("password_conf")}</InputLabel>
               <TextField
                 type="password"
                 value={passwordConf}
                 onChange={(e) => setPasswordConf(e.target.value)}
               />
               {error && password !== passwordConf ? (
-                <label style={{ color: "#f44336" }}>Passwords must match</label>
+                <label style={{ color: "#f44336" }}>
+                  {t("err_pass_match")}
+                </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  All fields are required
+                  {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
@@ -112,7 +116,7 @@ const AddAdmin = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

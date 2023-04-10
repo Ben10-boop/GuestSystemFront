@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { Divider, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/system";
+import { useTranslation } from "react-i18next";
+import LanguageSelect from "./LanguageSelect";
 
 const drawerWidth = 240;
 
@@ -21,6 +23,7 @@ export default function Header() {
   };
 
   const { getUser } = useUser();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   let links = [];
@@ -28,32 +31,33 @@ export default function Header() {
     getUser()?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
   if (!userRole) {
     links = [
-      { key: "Submit Form", value: "forms/guestadd" },
-      { key: "Home", value: "/" },
-      { key: "Administrator login", value: "/login" },
+      { key: "begin_visit", value: "forms/guestadd" },
+      { key: "end_visit", value: "forms/endvisit" },
+      { key: "home", value: "/" },
+      { key: "admin_login", value: "/login" },
     ];
   } else if (["super"].includes(userRole)) {
     links = [
-      { key: "Visitees", value: "/visitees" },
-      { key: "Administrators", value: "/admins" },
-      { key: "Documents", value: "/documents" },
-      { key: "Forms", value: "/forms" },
-      { key: "Logout", value: "/logout" },
+      { key: "employees", value: "/visitees" },
+      { key: "admins", value: "/admins" },
+      { key: "documents", value: "/documents" },
+      { key: "forms", value: "/forms" },
+      { key: "logout", value: "/logout" },
     ];
   } else if (["regular"].includes(userRole)) {
     links = [
-      { key: "Visitees", value: "/visitees" },
-      { key: "Forms", value: "/forms" },
-      { key: "Logout", value: "/logout" },
+      { key: "employees", value: "/visitees" },
+      { key: "forms", value: "/forms" },
+      { key: "logout", value: "/logout" },
     ];
   } else {
-    links = [{ key: "Logout", value: "/logout" }];
+    links = [{ key: "logout", value: "/logout" }];
   }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Menu
+        {t("menu")}
       </Typography>
       <Divider />
       <Stack>
@@ -66,7 +70,7 @@ export default function Header() {
               }}
               color="inherit"
             >
-              {link.key}
+              {t(`${link.key}`)}
             </Button>
           );
         })}
@@ -90,9 +94,12 @@ export default function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            GRS
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div">
+              {t("grs")}
+            </Typography>
+            <LanguageSelect />
+          </Box>
 
           <Drawer
             container={container}
@@ -122,7 +129,7 @@ export default function Header() {
                 }}
                 color="inherit"
               >
-                {link.key}
+                {t(`${link.key}`)}
               </Button>
             );
           })}

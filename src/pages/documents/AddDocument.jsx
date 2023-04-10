@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -16,6 +17,7 @@ import { useDocuments } from "../../hooks/UseDocuments";
 
 const AddDocument = () => {
   const { postDocument } = useDocuments();
+  const { t } = useTranslation();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
   const [content, setContent] = useState("");
@@ -79,14 +81,14 @@ const AddDocument = () => {
         >
           <form onSubmit={handleAddDocument}>
             <Stack spacing={2}>
-              <Typography variant="h5">Add new additional document</Typography>
-              <InputLabel>Title</InputLabel>
+              <Typography variant="h5">{t("add_document")}</Typography>
+              <InputLabel>{t("title")}</InputLabel>
               <TextField
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              <InputLabel id="maxPayloadInput">Status</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("status")}</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={status}
@@ -95,7 +97,7 @@ const AddDocument = () => {
                 <MenuItem value={"active"}>Active</MenuItem>
                 <MenuItem value={"inactive"}>Inactive</MenuItem>
               </Select>
-              <InputLabel>Content</InputLabel>
+              <InputLabel>{t("content")}</InputLabel>
               <input
                 type="file"
                 name="file"
@@ -103,20 +105,20 @@ const AddDocument = () => {
                 onChange={(e) => handleFileUpload(e)}
               />
               {error && !uplFile.type ? (
-                <label style={{ color: "#f44336" }}>Please upload a file</label>
+                <label style={{ color: "#f44336" }}>{t("err_no_file")}</label>
               ) : (
                 ""
               )}
               {error && uplFile.type !== "application/pdf" ? (
                 <label style={{ color: "#f44336" }}>
-                  Uploaded file must be in .pdf format
+                  {t("err_file_must_be_pdf")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  All fields are required
+                  {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
@@ -126,7 +128,7 @@ const AddDocument = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

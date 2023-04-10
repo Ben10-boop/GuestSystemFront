@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -17,6 +18,7 @@ import { useError } from "../../context/UseError";
 const EditAdmin = () => {
   const { setError: setHeaderError } = useError();
   const { putAdmin, getAdmin } = useAdmins();
+  const { t } = useTranslation();
   const [details, setDetails] = useState({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -75,15 +77,19 @@ const EditAdmin = () => {
           <form onSubmit={handleEditAdmin}>
             <Stack spacing={2}>
               <Typography variant="h5">
-                View, edit administrator {params.identifier}
+                {t("view_edit_admin")} {params.identifier}
               </Typography>
-              <InputLabel>Name : {details["name"]}</InputLabel>
+              <InputLabel>
+                {t("name")} : {details["name"]}
+              </InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>Email : {details["email"]}</InputLabel>
+              <InputLabel>
+                {t("email")} : {details["email"]}
+              </InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -91,25 +97,27 @@ const EditAdmin = () => {
               />
               {error && !emailRegEx.test(email) && email !== "" ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
-              <InputLabel>Password</InputLabel>
+              <InputLabel>{t("password")}</InputLabel>
               <TextField
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputLabel>Confirm password</InputLabel>
+              <InputLabel>{t("password_conf")}</InputLabel>
               <TextField
                 type="password"
                 value={passwordConf}
                 onChange={(e) => setPasswordConf(e.target.value)}
               />
               {error && password !== passwordConf ? (
-                <label style={{ color: "#f44336" }}>Passwords must match</label>
+                <label style={{ color: "#f44336" }}>
+                  {t("err_pass_match")}
+                </label>
               ) : (
                 ""
               )}
@@ -118,7 +126,7 @@ const EditAdmin = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

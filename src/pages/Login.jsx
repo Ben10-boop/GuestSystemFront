@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/UseAuth";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -16,6 +17,7 @@ import {
 const Login = () => {
   //const { setError: setHeaderError } = useError();
   const { login } = useAuth();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -58,8 +60,8 @@ const Login = () => {
         >
           <form onSubmit={handleLogin}>
             <Stack spacing={2}>
-              <Typography variant="h4">Administrator login</Typography>
-              <InputLabel id="emailItem">Email</InputLabel>
+              <Typography variant="h4">{t("admin_login")}</Typography>
+              <InputLabel id="emailItem">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -67,19 +69,12 @@ const Login = () => {
               />
               {error && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
-              {error && email.length === 0 ? (
-                <label style={{ color: "#f44336" }}>
-                  Email is a required field
-                </label>
-              ) : (
-                ""
-              )}
-              <InputLabel id="passItem">Password</InputLabel>
+              <InputLabel id="passItem">{t("password")}</InputLabel>
               <TextField
                 type="password"
                 value={password}
@@ -87,7 +82,7 @@ const Login = () => {
               />
               {error && password.length < 9 ? (
                 <label style={{ color: "#f44336" }}>
-                  Password must be at least 9 characters long
+                  {t("err_pass_too_short")}
                 </label>
               ) : (
                 ""
@@ -97,7 +92,7 @@ const Login = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Log in
+                {t("log_in")}
               </LoadingButton>
             </Stack>
           </form>
