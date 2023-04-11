@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Stack,
@@ -32,6 +33,7 @@ const EditForm = () => {
   //const { setError: setHeaderError } = useError();
   const { putForm, getForm, getFormDocuments } = useForms();
   const { getVisitees } = useVisitees();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -191,16 +193,18 @@ const EditForm = () => {
             <form onSubmit={handleEditForm}>
               <Stack spacing={2}>
                 <Typography variant="h5">
-                  View, edit submitted Form {params.identifier}
+                  {t("view_edit_form")} {params.identifier}
                 </Typography>
-                <InputLabel>Guest name : {details["name"]}</InputLabel>
+                <InputLabel>
+                  {t("guest_name")} : {details["name"]}
+                </InputLabel>
                 <TextField
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <InputLabel>
-                  Visit purpose : {details["visitPurpose"]}
+                  {t("purpose")} : {details["visitPurpose"]}
                 </InputLabel>
                 <TextField
                   type="text"
@@ -208,7 +212,7 @@ const EditForm = () => {
                   onChange={(e) => setPurpose(e.target.value)}
                 />
                 <InputLabel>
-                  Entrance time :{" "}
+                  {t("entrance_time")} :{" "}
                   {details["entranceTime"]
                     ? format(new Date(details["entranceTime"]), "MM-dd HH:mm")
                     : ""}
@@ -254,7 +258,7 @@ const EditForm = () => {
                   </Select>
                 </Box>
                 <InputLabel>
-                  Departure time :{" "}
+                  {t("departure_time")} :{" "}
                   {details["departureTime"]
                     ? format(new Date(details["departureTime"]), "MM-dd HH:mm")
                     : ""}
@@ -300,7 +304,7 @@ const EditForm = () => {
                   </Select>
                 </Box>
                 <InputLabel>
-                  Employee being visited :{" "}
+                  {t("empl_being_visited")} :{" "}
                   {visitees[details["visiteeId"]]
                     ? visitees[details["visiteeId"]].name
                     : ""}
@@ -318,11 +322,11 @@ const EditForm = () => {
                     );
                   })}
                   <MenuItem key={-1} value={-1}>
-                    (Unchanged)
+                    ({t("unchanged")})
                   </MenuItem>
                 </Select>
                 <InputLabel id="maxPayloadInput">
-                  Grant wifi access : {details["wifiAccessStatus"]}
+                  {t("need_wifi")} : {details["wifiAccessStatus"]}
                 </InputLabel>
                 <Checkbox
                   checked={checked}
@@ -331,12 +335,14 @@ const EditForm = () => {
                 />
                 {!checked && details["wifiAccessStatus"] === "granted" ? (
                   <label style={{ color: "#c79538" }}>
-                    Wifi access was already granted, it cannot be removed
+                    {t("alert_wifi_already_granted")}
                   </label>
                 ) : (
                   ""
                 )}
-                <InputLabel>Email : {details["email"]}</InputLabel>
+                <InputLabel>
+                  {t("email")} : {details["email"]}
+                </InputLabel>
                 <TextField
                   type="text"
                   value={email}
@@ -347,14 +353,14 @@ const EditForm = () => {
                 details["wifiAccessStatus"] === "not requested" &&
                 email === "" ? (
                   <label style={{ color: "#f44336" }}>
-                    An email address is required in order to provide wifi access
+                    {t("err_email_req_if_wifi")}
                   </label>
                 ) : (
                   ""
                 )}
                 {email !== "" && !emailRegEx.test(email) ? (
                   <label style={{ color: "#f44336" }}>
-                    Please enter a proper email address
+                    {t("err_invalid_email")}
                   </label>
                 ) : (
                   ""
@@ -364,7 +370,7 @@ const EditForm = () => {
                   loading={isLoading}
                   type="submit"
                 >
-                  Submit
+                  {t("submit")}
                 </LoadingButton>
               </Stack>
             </form>
@@ -379,16 +385,27 @@ const EditForm = () => {
               padding: "24px",
             }}
           >
-            Signature:
+            {t("signature")}:
           </Typography>
-          <img src={details["signature"]} alt="Form signature"></img>
+          {details["signature"] ? (
+            <img src={details["signature"]} alt="Form signature"></img>
+          ) : (
+            <InputLabel
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              ({t("not_signed")})
+            </InputLabel>
+          )}
         </Paper>
       </Container>
       <Container maxWidth="xs">
         <Paper elevation={6}>
           <div className="Example__container">
             <div className="Example__container__document">
-              <InputLabel>Signed documents:</InputLabel>
+              <InputLabel>{t("signed_docs")}:</InputLabel>
               {formDocuments.map((item) => {
                 return (
                   <Box key={item.id}>
@@ -430,7 +447,7 @@ const EditForm = () => {
                       </Box>
                       <DialogActions>
                         <Button onClick={() => handleCloseDialog()}>
-                          Close
+                          {t("close")}
                         </Button>
                       </DialogActions>
                     </Dialog>

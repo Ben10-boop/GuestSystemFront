@@ -15,12 +15,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useForms } from "../../hooks/UseForms";
 import { useVisitees } from "../../hooks/UseVisitees";
+import { useTranslation } from "react-i18next";
 //import { useError } from "../../context/UseError";
 
 const AddForm = () => {
   //const { setError: setHeaderError } = useError();
   const { postForm } = useForms();
   const { getVisitees } = useVisitees();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -133,22 +135,22 @@ const AddForm = () => {
         >
           <form onSubmit={handleAddForm}>
             <Stack spacing={2}>
-              <Typography variant="h5">
-                Add new Guest form submission
-              </Typography>
-              <InputLabel>Guest name*</InputLabel>
+              <Typography variant="h5">{t("add_form")}</Typography>
+              <InputLabel>{t("guest_name")}*</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>Visit purpose*</InputLabel>
+              <InputLabel>{t("purpose")}*</InputLabel>
               <TextField
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
               />
-              <InputLabel>Entrance time (Date; Hour; Minute)*</InputLabel>
+              <InputLabel>
+                {t("entrance_time")} {t("date_time_param")}*
+              </InputLabel>
               <Box display="flex">
                 <TextField
                   sx={{
@@ -189,7 +191,9 @@ const AddForm = () => {
                   })}
                 </Select>
               </Box>
-              <InputLabel>Departure time (Date; Hour; Minute)*</InputLabel>
+              <InputLabel>
+                {t("departure_time")} {t("date_time_param")}*
+              </InputLabel>
               <Box display="flex">
                 <TextField
                   sx={{
@@ -230,7 +234,7 @@ const AddForm = () => {
                   })}
                 </Select>
               </Box>
-              <InputLabel>Employee being visited*</InputLabel>
+              <InputLabel>{t("empl_being_visited")}*</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={visiteeId}
@@ -244,13 +248,13 @@ const AddForm = () => {
                   );
                 })}
               </Select>
-              <InputLabel id="maxPayloadInput">Grant wifi access</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
               <Checkbox
                 checked={checked}
                 onChange={handleCheckBoxTick}
                 inputProps={{ "aria-label": "controlled" }}
               />
-              <InputLabel id="maxPayloadInput">Email</InputLabel>
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
@@ -258,21 +262,21 @@ const AddForm = () => {
               />
               {error && checked && email === "" ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter the email address if wifi access is needed
+                  {t("err_email_req_if_wifi")}
                 </label>
               ) : (
                 ""
               )}
               {error && checked && email !== "" && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
-                  Please enter a valid email address
+                  {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  Fields marked with "*" are required
+                  {t("err_fields_with_star_req")}
                 </label>
               ) : (
                 ""
@@ -282,7 +286,7 @@ const AddForm = () => {
                 loading={isLoading}
                 type="submit"
               >
-                Submit
+                {t("submit")}
               </LoadingButton>
             </Stack>
           </form>

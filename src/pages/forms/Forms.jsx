@@ -19,10 +19,12 @@ import { format } from "date-fns";
 import { useForms } from "../../hooks/UseForms";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/UseUser";
+import { useTranslation } from "react-i18next";
 
 const Forms = () => {
   const { getForms, deleteForm } = useForms();
   const { getUser } = useUser();
+  const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [Forms, setForms] = useState([]);
@@ -85,7 +87,7 @@ const Forms = () => {
           overflowX: "hidden",
         }}
       >
-        <Typography variant="h5">Guest form submission list</Typography>
+        <Typography variant="h5">{t("form_list")}</Typography>
         <TableContainer
           component={Paper}
           sx={{
@@ -98,13 +100,13 @@ const Forms = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Guest name</TableCell>
-                <TableCell>Visit purpose</TableCell>
-                <TableCell>Form signed</TableCell>
-                <TableCell>Entrance time</TableCell>
-                <TableCell>Departure time</TableCell>
-                <TableCell>Guest email</TableCell>
-                <TableCell>Wifi access</TableCell>
+                <TableCell>{t("name")}</TableCell>
+                <TableCell>{t("purpose")}</TableCell>
+                <TableCell>{t("form_signed")}</TableCell>
+                <TableCell>{t("entrance_time")}</TableCell>
+                <TableCell>{t("departure_time")}</TableCell>
+                <TableCell>{t("guest_email")}</TableCell>
+                <TableCell>{t("wifi_access")}</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -117,7 +119,11 @@ const Forms = () => {
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.visitPurpose}</TableCell>
                     <TableCell>
-                      {item.signature ? <label>yes</label> : <label>no</label>}
+                      {item.signature ? (
+                        <label>{t("yes")}</label>
+                      ) : (
+                        <label>{t("no")}</label>
+                      )}
                     </TableCell>
                     <TableCell>
                       {format(new Date(item.entranceTime), "MM-dd HH:mm")}
@@ -126,11 +132,11 @@ const Forms = () => {
                       {item.departureTime ? (
                         format(new Date(item.departureTime), "MM-dd HH:mm")
                       ) : (
-                        <label>not set</label>
+                        <label>{t("not_set")}</label>
                       )}
                     </TableCell>
                     <TableCell>
-                      {item.email ? item.email : <label>not given</label>}
+                      {item.email ? item.email : <label>{t("not_set")}</label>}
                     </TableCell>
                     <TableCell>{item.wifiAccessStatus}</TableCell>
                     <TableCell>
@@ -139,7 +145,7 @@ const Forms = () => {
                           navigate("/Forms/" + item.id);
                         }}
                       >
-                        Edit
+                        {t("edit")}
                       </Button>
                     </TableCell>
                     <TableCell>
@@ -150,7 +156,7 @@ const Forms = () => {
                               handleOpenDialog(item.id);
                             }}
                           >
-                            Delete
+                            {t("delete")}
                           </Button>
                           <Dialog
                             open={dialogOpenId === item.id}
@@ -159,14 +165,18 @@ const Forms = () => {
                             aria-describedby="alert-dialog-description"
                           >
                             <DialogTitle id="alert-dialog-title">
-                              {`Are you sure you ant to delete the form of "${item.name}"`}
+                              {t("delete_dialog_conf")}
+                              {` "${item.name} ${format(
+                                new Date(item.entranceTime),
+                                "MM-dd HH:mm"
+                              )}"?`}
                             </DialogTitle>
                             <DialogActions>
                               <Button onClick={() => handleCloseDialog()}>
-                                No
+                                {t("no")}
                               </Button>
                               <Button onClick={() => handleDeleteForm(item.id)}>
-                                Yes
+                                {t("yes")}
                               </Button>
                             </DialogActions>
                           </Dialog>
@@ -187,7 +197,7 @@ const Forms = () => {
             navigate("/Forms/add");
           }}
         >
-          Add new Form submission
+          {t("add_form")}
         </Button>
       </Stack>
     </Box>
