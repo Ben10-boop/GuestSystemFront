@@ -9,16 +9,29 @@ import {
   TableCell,
   TableBody,
   TableHead,
+  Grid,
   Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  TextField,
+  Alert,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { useForms } from "../hooks/UseForms";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
-  const { getActiveGuests, getActiveForms } = useForms();
+  const { getActiveGuests, getActiveForms, sendAlarm } = useForms();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const [alarmMessage, setAlarmMessage] = useState(
+    "There is an emergency, please evacuate the building!"
+  );
+  const [alarmDialogOpen, setAlarmDialogOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [Forms, setForms] = useState([]);
   const [Guests, setGuests] = useState([]);
   const [formValuesChanged, setFormValuesChanged] = useState(true);
@@ -61,22 +74,47 @@ const Home = () => {
     }
   };
 
+  const handleSendAlarm = async () => {
+    //e.preventDefault();
+    try {
+      setIsLoading(true);
+      setAlarmDialogOpen(false);
+      await sendAlarm(alarmMessage);
+      setSuccess(true);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const hadleOpenAlarmDialog = () => {
+    setAlarmDialogOpen(true);
+  };
+
+  const hadleCloseAlarmDialog = () => {
+    setAlarmDialogOpen(false);
+  };
+
   return (
     <Box>
-      <Box>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, marginLeft: 5 }}
-        >
-          {t("welcome_to_admin_home")}
-        </Typography>
-        <Box
+      <Grid container columns={{ sm: 4, md: 8 }}>
+        <Grid item sm={4} md={8}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, marginLeft: 5 }}
+          >
+            {t("welcome_to_admin_home")}
+          </Typography>
+        </Grid>
+        {/* <Box
           display="flex"
           sx={{
             justifyContent: "center",
           }}
-        >
+        > */}
+        <Grid item sm={4}>
           <Stack
             display="flex"
             spacing={2}
@@ -123,7 +161,64 @@ const Home = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            <LoadingButton
+              variant="contained"
+              loading={isLoading}
+              onClick={() => {
+                hadleOpenAlarmDialog();
+              }}
+            >
+              {t("send_alarm")}
+            </LoadingButton>
+            {success ? (
+              <Alert sx={{ marginTop: 3 }} severity="success">
+                {t("alert_alarm_success")}
+              </Alert>
+            ) : (
+              ""
+            )}
+            <Dialog
+              open={alarmDialogOpen}
+              onClose={hadleCloseAlarmDialog}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+              maxWidth="xl"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {t("send_alarm_title")}
+              </DialogTitle>
+              <TextField
+                id="filled-multiline-static"
+                label={t("mail_content")}
+                multiline
+                rows={5}
+                value={alarmMessage}
+                variant="filled"
+                onChange={(e) => setAlarmMessage(e.target.value)}
+                sx={{
+                  margin: "10px",
+                }}
+              />
+              <DialogActions>
+                <Button
+                  variant="text"
+                  type="button"
+                  onClick={() => hadleCloseAlarmDialog()}
+                >
+                  {t("cancel")}
+                </Button>
+                <Button
+                  variant="contained"
+                  type="button"
+                  onClick={() => handleSendAlarm()}
+                >
+                  {t("send")}
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Stack>
+        </Grid>
+        <Grid item sm={4}>
           <Stack
             spacing={2}
             display="flex"
@@ -165,8 +260,9 @@ const Home = () => {
               </Table>
             </TableContainer>
           </Stack>
-        </Box>
-      </Box>
+        </Grid>
+        {/* </Box> */}
+      </Grid>
     </Box>
   );
 };

@@ -29,6 +29,7 @@ const GuestHome = () => {
           }}
           sx={{
             margin: 10,
+            padding: 5,
           }}
         >
           {t("end_visit")}

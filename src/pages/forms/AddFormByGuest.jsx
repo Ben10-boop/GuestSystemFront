@@ -224,7 +224,14 @@ const AddFormByGuest = () => {
                     );
                   })}
                 </Select>
-                <InputLabel>{t("h")}</InputLabel>
+                <InputLabel
+                  sx={{
+                    margin: "4px",
+                    marginTop: "20px",
+                  }}
+                >
+                  {t("h")}
+                </InputLabel>
                 <Select
                   sx={{
                     margin: "2px",
@@ -243,7 +250,14 @@ const AddFormByGuest = () => {
                     );
                   })}
                 </Select>
-                <InputLabel>min</InputLabel>
+                <InputLabel
+                  sx={{
+                    margin: "4px",
+                    marginTop: "20px",
+                  }}
+                >
+                  min
+                </InputLabel>
               </Box>
               <InputLabel>{t("empl_being_visited")}</InputLabel>
               <Select

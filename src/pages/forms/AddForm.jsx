@@ -65,7 +65,7 @@ const AddForm = () => {
   const getDateString = (date, hour, minute) => {
     const adjustedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const adjustedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-    return new Date(`${date}T${adjustedHour}:${adjustedMinute}`).toUTCString;
+    return new Date(`${date}T${adjustedHour}:${adjustedMinute}`).toJSON();
   };
 
   const handleCheckBoxTick = (e) => {

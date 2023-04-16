@@ -12,10 +12,10 @@ import {
   Box,
   InputLabel,
 } from "@mui/material";
-//import { useError } from "../context/UseError";
+import { useError } from "../context/UseError";
 
 const Login = () => {
-  //const { setError: setHeaderError } = useError();
+  const { setError: setHeaderError } = useError();
   const { login } = useAuth();
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
@@ -39,12 +39,12 @@ const Login = () => {
     }
     try {
       setIsLoading(true);
-      //setHeaderError(null);
+      setHeaderError(null);
       await login(email, password);
       navigate("/home");
     } catch (err) {
       console.log(err);
-      //setHeaderError(err.response.data);
+      setHeaderError(err.response.data);
     } finally {
       setIsLoading(false);
     }

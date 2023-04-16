@@ -38,6 +38,7 @@ export default function Header() {
     ];
   } else if (["super"].includes(userRole)) {
     links = [
+      { key: "main", value: "/home" },
       { key: "employees", value: "/visitees" },
       { key: "admins", value: "/admins" },
       { key: "documents", value: "/documents" },
@@ -46,6 +47,7 @@ export default function Header() {
     ];
   } else if (["regular"].includes(userRole)) {
     links = [
+      { key: "main", value: "/home" },
       { key: "employees", value: "/visitees" },
       { key: "forms", value: "/forms" },
       { key: "logout", value: "/logout" },

@@ -10,6 +10,7 @@ import {
   Paper,
   Box,
   Checkbox,
+  Grid,
   InputLabel,
   Select,
   MenuItem,
@@ -183,149 +184,157 @@ const EditForm = () => {
 
   return (
     <div>
-      <Container maxWidth="xs">
-        <Paper elevation={6}>
-          <Box
-            sx={{
-              padding: "24px",
-            }}
-          >
-            <form onSubmit={handleEditForm}>
-              <Stack spacing={2}>
-                <Typography variant="h5">
-                  {t("view_edit_form")} {params.identifier}
-                </Typography>
-                <InputLabel>
-                  {t("guest_name")} : {details["name"]}
-                </InputLabel>
-                <TextField
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <InputLabel>
-                  {t("purpose")} : {details["visitPurpose"]}
-                </InputLabel>
-                <TextField
-                  type="text"
-                  value={purpose}
-                  onChange={(e) => setPurpose(e.target.value)}
-                />
-                <InputLabel>
-                  {t("entrance_time")} :{" "}
-                  {details["entranceTime"]
-                    ? format(new Date(details["entranceTime"]), "MM-dd HH:mm")
-                    : ""}
-                </InputLabel>
-                <Box display="flex">
-                  <TextField
-                    sx={{
-                      padding: "2px",
-                    }}
-                    type="date"
-                    value={entranceTimeDate}
-                    onChange={(e) => setEntranceTimeDate(e.target.value)}
-                  />
-                  <Select
-                    sx={{
-                      margin: "2px",
-                    }}
-                    value={entranceTimeHour}
-                    onChange={(e) => setEntranceTimeHour(e.target.value)}
-                  >
-                    {[...Array(24)].map((x, i) => {
-                      return (
-                        <MenuItem key={i} value={i}>
-                          {i}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                  <Select
-                    sx={{
-                      margin: "2px",
-                    }}
-                    value={entranceTimeMinute}
-                    onChange={(e) => setEntranceTimeMinute(e.target.value)}
-                  >
-                    {[...Array(60)].map((x, i) => {
-                      return (
-                        <MenuItem key={i} value={i}>
-                          {i}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </Box>
-                <InputLabel>
-                  {t("departure_time")} :{" "}
-                  {details["departureTime"]
-                    ? format(new Date(details["departureTime"]), "MM-dd HH:mm")
-                    : ""}
-                </InputLabel>
-                <Box display="flex">
-                  <TextField
-                    sx={{
-                      padding: "2px",
-                    }}
-                    type="date"
-                    value={departureTimeDate}
-                    onChange={(e) => setDepartureTimeDate(e.target.value)}
-                  />
-                  <Select
-                    sx={{
-                      margin: "2px",
-                    }}
-                    value={departureTimeHour}
-                    onChange={(e) => setDepartureTimeHour(e.target.value)}
-                  >
-                    {[...Array(24)].map((x, i) => {
-                      return (
-                        <MenuItem key={i} value={i}>
-                          {i}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                  <Select
-                    sx={{
-                      margin: "2px",
-                    }}
-                    value={departureTimeMinute}
-                    onChange={(e) => setDepartureTimeMinute(e.target.value)}
-                  >
-                    {[...Array(60)].map((x, i) => {
-                      return (
-                        <MenuItem key={i} value={i}>
-                          {i}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </Box>
-                <InputLabel>
-                  {t("empl_being_visited")} :{" "}
-                  {visitees[details["visiteeId"]]
-                    ? visitees[details["visiteeId"]].name
-                    : ""}
-                </InputLabel>
-                <Select
-                  id="statusSelectThing"
-                  value={visiteeId}
-                  onChange={(e) => setVisiteeId(e.target.value)}
-                >
-                  {visitees.map((item) => {
-                    return (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
+      <Grid container columns={{ sm: 4, md: 8 }}>
+        <Grid item xs={4}>
+          <Container maxWidth="xs">
+            <Paper elevation={6}>
+              <Box
+                sx={{
+                  padding: "24px",
+                }}
+              >
+                <form onSubmit={handleEditForm}>
+                  <Stack spacing={2}>
+                    <Typography variant="h5">
+                      {t("view_edit_form")} {params.identifier}
+                    </Typography>
+                    <InputLabel>
+                      {t("guest_name")} : {details["name"]}
+                    </InputLabel>
+                    <TextField
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <InputLabel>
+                      {t("purpose")} : {details["visitPurpose"]}
+                    </InputLabel>
+                    <TextField
+                      type="text"
+                      value={purpose}
+                      onChange={(e) => setPurpose(e.target.value)}
+                    />
+                    <InputLabel>
+                      {t("entrance_time")} :{" "}
+                      {details["entranceTime"]
+                        ? format(
+                            new Date(details["entranceTime"]),
+                            "MM-dd HH:mm"
+                          )
+                        : ""}
+                    </InputLabel>
+                    <Box display="flex">
+                      <TextField
+                        sx={{
+                          padding: "2px",
+                        }}
+                        type="date"
+                        value={entranceTimeDate}
+                        onChange={(e) => setEntranceTimeDate(e.target.value)}
+                      />
+                      <Select
+                        sx={{
+                          margin: "2px",
+                        }}
+                        value={entranceTimeHour}
+                        onChange={(e) => setEntranceTimeHour(e.target.value)}
+                      >
+                        {[...Array(24)].map((x, i) => {
+                          return (
+                            <MenuItem key={i} value={i}>
+                              {i}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                      <Select
+                        sx={{
+                          margin: "2px",
+                        }}
+                        value={entranceTimeMinute}
+                        onChange={(e) => setEntranceTimeMinute(e.target.value)}
+                      >
+                        {[...Array(60)].map((x, i) => {
+                          return (
+                            <MenuItem key={i} value={i}>
+                              {i}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </Box>
+                    <InputLabel>
+                      {t("departure_time")} :{" "}
+                      {details["departureTime"]
+                        ? format(
+                            new Date(details["departureTime"]),
+                            "MM-dd HH:mm"
+                          )
+                        : ""}
+                    </InputLabel>
+                    <Box display="flex">
+                      <TextField
+                        sx={{
+                          padding: "2px",
+                        }}
+                        type="date"
+                        value={departureTimeDate}
+                        onChange={(e) => setDepartureTimeDate(e.target.value)}
+                      />
+                      <Select
+                        sx={{
+                          margin: "2px",
+                        }}
+                        value={departureTimeHour}
+                        onChange={(e) => setDepartureTimeHour(e.target.value)}
+                      >
+                        {[...Array(24)].map((x, i) => {
+                          return (
+                            <MenuItem key={i} value={i}>
+                              {i}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                      <Select
+                        sx={{
+                          margin: "2px",
+                        }}
+                        value={departureTimeMinute}
+                        onChange={(e) => setDepartureTimeMinute(e.target.value)}
+                      >
+                        {[...Array(60)].map((x, i) => {
+                          return (
+                            <MenuItem key={i} value={i}>
+                              {i}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </Box>
+                    <InputLabel>
+                      {t("empl_being_visited")} :{" "}
+                      {visitees[details["visiteeId"]]
+                        ? visitees[details["visiteeId"]].name
+                        : ""}
+                    </InputLabel>
+                    <Select
+                      id="statusSelectThing"
+                      value={visiteeId}
+                      onChange={(e) => setVisiteeId(e.target.value)}
+                    >
+                      {visitees.map((item) => {
+                        return (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        );
+                      })}
+                      <MenuItem key={-1} value={-1}>
+                        ({t("unchanged")})
                       </MenuItem>
-                    );
-                  })}
-                  <MenuItem key={-1} value={-1}>
-                    ({t("unchanged")})
-                  </MenuItem>
-                </Select>
-                {/* <InputLabel id="maxPayloadInput">
+                    </Select>
+                    {/* <InputLabel id="maxPayloadInput">
                   {t("need_wifi")} : {details["wifiAccessStatus"]}
                 </InputLabel>
                 <Checkbox
@@ -340,124 +349,133 @@ const EditForm = () => {
                 ) : (
                   ""
                 )} */}
-                <InputLabel>
-                  {t("email")} : {details["email"]}
-                </InputLabel>
-                <TextField
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {error &&
-                checked &&
-                details["wifiAccessStatus"] === "not requested" &&
-                email === "" ? (
-                  <label style={{ color: "#f44336" }}>
-                    {t("err_email_req_if_wifi")}
-                  </label>
-                ) : (
-                  ""
-                )}
-                {email !== "" && !emailRegEx.test(email) ? (
-                  <label style={{ color: "#f44336" }}>
-                    {t("err_invalid_email")}
-                  </label>
-                ) : (
-                  ""
-                )}
-                <LoadingButton
-                  variant="contained"
-                  loading={isLoading}
-                  type="submit"
-                >
-                  {t("submit")}
-                </LoadingButton>
-              </Stack>
-            </form>
-          </Box>
-        </Paper>
-      </Container>
-      <Container maxWidth="xs">
-        <Paper elevation={6}>
-          <Typography
-            variant="h6"
+                    <InputLabel>
+                      {t("email")} : {details["email"]}
+                    </InputLabel>
+                    <TextField
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {error &&
+                    checked &&
+                    details["wifiAccessStatus"] === "not requested" &&
+                    email === "" ? (
+                      <label style={{ color: "#f44336" }}>
+                        {t("err_email_req_if_wifi")}
+                      </label>
+                    ) : (
+                      ""
+                    )}
+                    {email !== "" && !emailRegEx.test(email) ? (
+                      <label style={{ color: "#f44336" }}>
+                        {t("err_invalid_email")}
+                      </label>
+                    ) : (
+                      ""
+                    )}
+                    <LoadingButton
+                      variant="contained"
+                      loading={isLoading}
+                      type="submit"
+                    >
+                      {t("submit")}
+                    </LoadingButton>
+                  </Stack>
+                </form>
+              </Box>
+            </Paper>
+          </Container>
+        </Grid>
+        <Grid item xs={4}>
+          <Container
+            maxWidth="xs"
             sx={{
-              padding: "24px",
+              marginTop: "10px",
             }}
           >
-            {t("signature")}:
-          </Typography>
-          {details["signature"] ? (
-            <img src={details["signature"]} alt="Form signature"></img>
-          ) : (
-            <InputLabel
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              ({t("not_signed")})
-            </InputLabel>
-          )}
-        </Paper>
-      </Container>
-      <Container maxWidth="xs">
-        <Paper elevation={6}>
-          <div className="Example__container">
-            <div className="Example__container__document">
-              <InputLabel>{t("signed_docs")}:</InputLabel>
-              {formDocuments.map((item) => {
-                return (
-                  <Box key={item.id}>
-                    <Link
-                      component="button"
-                      variant="body2"
-                      onClick={() => {
-                        handleOpenDialog(item.id);
-                      }}
-                    >
-                      {item.title}
-                    </Link>
-                    <Dialog
-                      open={dialogOpenId === item.id}
-                      onClose={handleCloseDialog}
-                      aria-labelledby="alert-dialog-title"
-                      aria-describedby="alert-dialog-description"
-                      maxWidth="xl"
-                    >
-                      <Document
-                        file={item.content}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        options={options}
-                      >
-                        <Page pageNumber={pageNumber} />
-                      </Document>
-                      <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        minHeight="10vh"
-                      >
-                        <Pagination
-                          justifycontent="center"
-                          count={numPages}
-                          page={pageNumber}
-                          onChange={handleChangePage}
-                        ></Pagination>
+            <Paper elevation={6}>
+              <Typography
+                variant="h6"
+                sx={{
+                  padding: "24px",
+                }}
+              >
+                {t("signature")}:
+              </Typography>
+              {details["signature"] ? (
+                <img src={details["signature"]} alt="Form signature"></img>
+              ) : (
+                <InputLabel
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  ({t("not_signed")})
+                </InputLabel>
+              )}
+            </Paper>
+          </Container>
+          <Container maxWidth="xs">
+            <Paper elevation={6}>
+              <div className="Example__container">
+                <div className="Example__container__document">
+                  <InputLabel>{t("signed_docs")}:</InputLabel>
+                  {formDocuments.map((item) => {
+                    return (
+                      <Box key={item.id}>
+                        <Link
+                          component="button"
+                          variant="body2"
+                          onClick={() => {
+                            handleOpenDialog(item.id);
+                          }}
+                        >
+                          {item.title}
+                        </Link>
+                        <Dialog
+                          open={dialogOpenId === item.id}
+                          onClose={handleCloseDialog}
+                          aria-labelledby="alert-dialog-title"
+                          aria-describedby="alert-dialog-description"
+                          maxWidth="xl"
+                        >
+                          <Document
+                            file={item.content}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            options={options}
+                          >
+                            <Page pageNumber={pageNumber} />
+                          </Document>
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            minHeight="10vh"
+                          >
+                            <Pagination
+                              justifycontent="center"
+                              count={numPages}
+                              page={pageNumber}
+                              onChange={handleChangePage}
+                            ></Pagination>
+                          </Box>
+                          <DialogActions>
+                            <Button onClick={() => handleCloseDialog()}>
+                              {t("close")}
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
                       </Box>
-                      <DialogActions>
-                        <Button onClick={() => handleCloseDialog()}>
-                          {t("close")}
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Box>
-                );
-              })}
-            </div>
-          </div>
-        </Paper>
-      </Container>
+                    );
+                  })}
+                </div>
+              </div>
+            </Paper>
+          </Container>
+        </Grid>
+      </Grid>
     </div>
   );
 };

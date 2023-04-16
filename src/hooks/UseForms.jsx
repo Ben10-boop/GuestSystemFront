@@ -69,17 +69,17 @@ export const useForms = () => {
   const getActiveGuests = async () => {
     const response = await axios.get(API_URL + `/ActiveGuests`);
     return response.data;
-  }
+  };
 
   const getActiveForms = async () => {
     const response = await axios.get(API_URL + `/Active`);
     return response.data;
-  }
+  };
 
   const getRecentForms = async () => {
     const response = await axios.get(API_URL + `/Recent`);
     return response.data;
-  }
+  };
 
   const deleteForm = async (id) => {
     const response = await axios.delete(API_URL + `/${id}`);
@@ -91,6 +91,11 @@ export const useForms = () => {
     return response.data;
   };
 
+  const sendAlarm = async (message) => {
+    const response = await axios.post(API_URL + `/Active/Alarm`, { message });
+    return response.data;
+  };
+
   return {
     getForms,
     getForm,
@@ -99,6 +104,7 @@ export const useForms = () => {
     getFormDocuments,
     getActiveGuests,
     getActiveForms,
+    sendAlarm,
     deleteForm,
     getRecentForms,
     endVisit,
