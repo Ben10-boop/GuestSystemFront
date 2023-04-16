@@ -325,7 +325,7 @@ const EditForm = () => {
                     ({t("unchanged")})
                   </MenuItem>
                 </Select>
-                <InputLabel id="maxPayloadInput">
+                {/* <InputLabel id="maxPayloadInput">
                   {t("need_wifi")} : {details["wifiAccessStatus"]}
                 </InputLabel>
                 <Checkbox
@@ -339,7 +339,7 @@ const EditForm = () => {
                   </label>
                 ) : (
                   ""
-                )}
+                )} */}
                 <InputLabel>
                   {t("email")} : {details["email"]}
                 </InputLabel>

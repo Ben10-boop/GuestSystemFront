@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 
 const Visitees = () => {
   //const { setError: setHeaderError } = useError();
-  const { getVisitees, deleteVisitee } = useVisitees();
+  const { getAllVisitees, deleteVisitee } = useVisitees();
   const { t } = useTranslation();
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +42,7 @@ const Visitees = () => {
     try {
       setIsLoading(true);
       //setHeaderError(null);
-      setVisitees(await getVisitees());
+      setVisitees(await getAllVisitees());
     } catch (err) {
       console.log(err);
       //setHeaderError(err.response.data);

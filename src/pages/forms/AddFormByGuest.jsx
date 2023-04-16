@@ -102,17 +102,17 @@ const AddFormByGuest = () => {
   };
 
   const hadleOpenSignDialog = () => {
+    if ([name, purpose, visiteeId, email].includes("")) {
+      setEmptyError(true);
+      return;
+    }
     if (
       [
-        checked && !emailRegEx.test(email),
-        email !== "" && !emailRegEx.test(email),
+        !emailRegEx.test(email),
+        // email !== "" && !emailRegEx.test(email),
       ].includes(true)
     ) {
       setError(true);
-      return;
-    }
-    if ([name, purpose, visiteeId].includes("")) {
-      setEmptyError(true);
       return;
     }
     setSignDialogOpen(true);
@@ -150,9 +150,9 @@ const AddFormByGuest = () => {
     }
   };
 
-  const handleCheckBoxTick = (e) => {
-    setChecked(e.target.checked);
-  };
+  // const handleCheckBoxTick = (e) => {
+  //   setChecked(e.target.checked);
+  // };
 
   const handleAddForm = async () => {
     try {
@@ -195,19 +195,19 @@ const AddFormByGuest = () => {
           <form onSubmit={handleAddForm}>
             <Stack spacing={2}>
               <Typography variant="h5">{t("add_new_guest_form")}</Typography>
-              <InputLabel>{t("name")}*</InputLabel>
+              <InputLabel>{t("full_name")}</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>{t("purpose")}*</InputLabel>
+              <InputLabel>{t("purpose")}</InputLabel>
               <TextField
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
               />
-              <InputLabel>{t("planned_duration")}*</InputLabel>
+              <InputLabel>{t("planned_duration")}</InputLabel>
               <Box display="flex">
                 <Select
                   sx={{
@@ -245,7 +245,7 @@ const AddFormByGuest = () => {
                 </Select>
                 <InputLabel>min</InputLabel>
               </Box>
-              <InputLabel>{t("empl_being_visited")}*</InputLabel>
+              <InputLabel>{t("empl_being_visited")}</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={visiteeId}
@@ -259,26 +259,26 @@ const AddFormByGuest = () => {
                   );
                 })}
               </Select>
-              <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
+              {/* <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
               <Checkbox
                 checked={checked}
                 onChange={handleCheckBoxTick}
                 inputProps={{ "aria-label": "controlled" }}
-              />
+              /> */}
               <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error && checked && email === "" ? (
+              {/* {error && checked && email === "" ? (
                 <label style={{ color: "#f44336" }}>
                   {t("err_email_req_if_wifi")}
                 </label>
               ) : (
                 ""
-              )}
-              {error && checked && email !== "" && !emailRegEx.test(email) ? (
+              )} */}
+              {error && email !== "" && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
                   {t("err_invalid_email")}
                 </label>
@@ -287,7 +287,7 @@ const AddFormByGuest = () => {
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  {t("err_fields_with_star_req")}
+                  {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
@@ -387,7 +387,7 @@ const AddFormByGuest = () => {
       </Paper>
       {success ? (
         <Alert sx={{ marginTop: 3 }} severity="success">
-          {t("alert_sub_save_success")}SUBMISSION SAVED SUCCESSFULLY!
+          {t("alert_sub_save_success")}
         </Alert>
       ) : (
         ""

@@ -106,7 +106,7 @@ const Forms = () => {
                 <TableCell>{t("entrance_time")}</TableCell>
                 <TableCell>{t("departure_time")}</TableCell>
                 <TableCell>{t("guest_email")}</TableCell>
-                <TableCell>{t("wifi_access")}</TableCell>
+                {/* <TableCell>{t("wifi_access")}</TableCell> */}
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -138,7 +138,7 @@ const Forms = () => {
                     <TableCell>
                       {item.email ? item.email : <label>{t("not_set")}</label>}
                     </TableCell>
-                    <TableCell>{item.wifiAccessStatus}</TableCell>
+                    {/* <TableCell>{item.wifiAccessStatus}</TableCell> */}
                     <TableCell>
                       <Button
                         onClick={() => {

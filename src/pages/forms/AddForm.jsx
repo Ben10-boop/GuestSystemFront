@@ -76,7 +76,7 @@ const AddForm = () => {
     e.preventDefault();
     if (
       [
-        checked && !emailRegEx.test(email),
+        // !emailRegEx.test(email),
         email !== "" && !emailRegEx.test(email),
       ].includes(true)
     ) {
@@ -86,6 +86,7 @@ const AddForm = () => {
     if (
       [
         name,
+        email,
         purpose,
         entranceTimeDate,
         entranceTimeHour,
@@ -136,20 +137,20 @@ const AddForm = () => {
           <form onSubmit={handleAddForm}>
             <Stack spacing={2}>
               <Typography variant="h5">{t("add_form")}</Typography>
-              <InputLabel>{t("guest_name")}*</InputLabel>
+              <InputLabel>{t("guest_name")}</InputLabel>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel>{t("purpose")}*</InputLabel>
+              <InputLabel>{t("purpose")}</InputLabel>
               <TextField
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
               />
               <InputLabel>
-                {t("entrance_time")} {t("date_time_param")}*
+                {t("entrance_time")} {t("date_time_param")}
               </InputLabel>
               <Box display="flex">
                 <TextField
@@ -192,7 +193,7 @@ const AddForm = () => {
                 </Select>
               </Box>
               <InputLabel>
-                {t("departure_time")} {t("date_time_param")}*
+                {t("departure_time")} {t("date_time_param")}
               </InputLabel>
               <Box display="flex">
                 <TextField
@@ -234,7 +235,7 @@ const AddForm = () => {
                   })}
                 </Select>
               </Box>
-              <InputLabel>{t("empl_being_visited")}*</InputLabel>
+              <InputLabel>{t("empl_being_visited")}</InputLabel>
               <Select
                 id="statusSelectThing"
                 value={visiteeId}
@@ -248,12 +249,12 @@ const AddForm = () => {
                   );
                 })}
               </Select>
-              <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
+              {/* <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
               <Checkbox
                 checked={checked}
                 onChange={handleCheckBoxTick}
                 inputProps={{ "aria-label": "controlled" }}
-              />
+              /> */}
               <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
               <TextField
                 type="text"
@@ -267,7 +268,7 @@ const AddForm = () => {
               ) : (
                 ""
               )}
-              {error && checked && email !== "" && !emailRegEx.test(email) ? (
+              {error && email !== "" && !emailRegEx.test(email) ? (
                 <label style={{ color: "#f44336" }}>
                   {t("err_invalid_email")}
                 </label>
@@ -276,7 +277,7 @@ const AddForm = () => {
               )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
-                  {t("err_fields_with_star_req")}
+                  {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""

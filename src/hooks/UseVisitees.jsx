@@ -8,6 +8,11 @@ export const useVisitees = () => {
     return response.data;
   };
 
+  const getAllVisitees = async () => {
+    const response = await axios.get(API_URL + "/All");
+    return response.data;
+  };
+
   const getVisitee = async (id) => {
     const response = await axios.get(API_URL + `/${id}`);
     return response.data;
@@ -39,6 +44,7 @@ export const useVisitees = () => {
 
   return {
     getVisitees,
+    getAllVisitees,
     getVisitee,
     postVisitee,
     putVisitee,
