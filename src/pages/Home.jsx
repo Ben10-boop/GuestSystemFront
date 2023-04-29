@@ -145,7 +145,10 @@ const Home = () => {
                 <TableBody>
                   {Forms.map((item) => {
                     return (
-                      <TableRow key={item.id}>
+                      <TableRow
+                        key={item.id}
+                        data-testid={`table_row_${item.id}`}
+                      >
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.visitPurpose}</TableCell>
                         <TableCell>
@@ -162,6 +165,7 @@ const Home = () => {
               </Table>
             </TableContainer>
             <LoadingButton
+              data-testid="table_alarm_dialog_btn"
               variant="contained"
               loading={isLoading}
               onClick={() => {
@@ -208,6 +212,7 @@ const Home = () => {
                   {t("cancel")}
                 </Button>
                 <Button
+                  data-testid="alarm_dialog_conf_btn"
                   variant="contained"
                   type="button"
                   onClick={() => handleSendAlarm()}
@@ -249,7 +254,10 @@ const Home = () => {
                 <TableBody>
                   {Guests.map((item, index) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow
+                        key={index}
+                        data-testid={`guest_table_row_${index}`}
+                      >
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.personBeingVisited}</TableCell>
                         <TableCell>{item.status}</TableCell>

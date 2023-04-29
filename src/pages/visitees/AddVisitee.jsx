@@ -28,7 +28,7 @@ const AddVisitee = () => {
 
   const handleAddVisitee = async (e) => {
     e.preventDefault();
-    if ([!emailRegEx.test(email)].includes(true)) {
+    if ([!emailRegEx.test(email) && email !== ""].includes(true)) {
       setError(true);
       return;
     }
@@ -62,31 +62,44 @@ const AddVisitee = () => {
               <Typography variant="h5">{t("add_visitee")}</Typography>
               <InputLabel>{t("name")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "name_field",
+                }}
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
+              <InputLabel>{t("email")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "email_field",
+                }}
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error && !emailRegEx.test(email) ? (
-                <label style={{ color: "#f44336" }}>
+              {error && !emailRegEx.test(email) && email !== "" ? (
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="err_invalid_email"
+                >
                   {t("err_invalid_email")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="err_all_fields_req"
+                >
                   {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
               )}
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

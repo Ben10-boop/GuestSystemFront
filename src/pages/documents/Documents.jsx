@@ -104,7 +104,7 @@ const Documents = () => {
             <TableBody>
               {Documents.map((item) => {
                 return (
-                  <TableRow key={item.id}>
+                  <TableRow key={item.id} data-testid={`table_row_${item.id}`}>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.title}</TableCell>
                     <TableCell>{item.status}</TableCell>
@@ -119,6 +119,7 @@ const Documents = () => {
                     </TableCell>
                     <TableCell>
                       <Button
+                        data-testid={`table_delete_dialog_btn_${item.id}`}
                         onClick={() => {
                           handleOpenDialog(item.id);
                         }}
@@ -139,7 +140,10 @@ const Documents = () => {
                           <Button onClick={() => handleCloseDialog()}>
                             {t("no")}
                           </Button>
-                          <Button onClick={() => handleDeleteDocument(item.id)}>
+                          <Button
+                            data-testid={`table_delete_conf_btn_${item.id}`}
+                            onClick={() => handleDeleteDocument(item.id)}
+                          >
                             {t("yes")}
                           </Button>
                         </DialogActions>

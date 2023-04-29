@@ -108,12 +108,16 @@ const EndVisit = () => {
                 <InputLabel>{t("end_visit_expl")}</InputLabel>
                 <Box display="flex">
                   <TextField
+                    inputProps={{
+                      "data-testid": "name_field",
+                    }}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     sx={{ marginRight: 5 }}
                   />
                   <LoadingButton
+                    data-testid="submit_button"
                     variant="contained"
                     loading={isLoading}
                     type="button"
@@ -123,7 +127,10 @@ const EndVisit = () => {
                   </LoadingButton>
 
                   {error ? (
-                    <label style={{ color: "#f44336" }}>
+                    <label
+                      data-testid="err_name_not_found"
+                      style={{ color: "#f44336" }}
+                    >
                       {t("err_name_not_found")}
                     </label>
                   ) : (

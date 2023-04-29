@@ -84,12 +84,18 @@ const AddDocument = () => {
               <Typography variant="h5">{t("add_document")}</Typography>
               <InputLabel>{t("title")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "title_field",
+                }}
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
               <InputLabel id="maxPayloadInput">{t("status")}</InputLabel>
               <Select
+                inputProps={{
+                  "data-testid": "status_field",
+                }}
                 id="statusSelectThing"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
@@ -99,31 +105,41 @@ const AddDocument = () => {
               </Select>
               <InputLabel>{t("content")}</InputLabel>
               <input
+                data-testid="file_upload_field"
                 type="file"
                 name="file"
                 accept="application/pdf"
                 onChange={(e) => handleFileUpload(e)}
               />
               {error && !uplFile.type ? (
-                <label style={{ color: "#f44336" }}>{t("err_no_file")}</label>
+                <label data-testid="err_no_file" style={{ color: "#f44336" }}>
+                  {t("err_no_file")}
+                </label>
               ) : (
                 ""
               )}
               {error && uplFile.type !== "application/pdf" ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  data-testid="err_file_must_be_pdf"
+                  style={{ color: "#f44336" }}
+                >
                   {t("err_file_must_be_pdf")}
                 </label>
               ) : (
                 ""
               )}
               {emptyError ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  data-testid="err_all_fields_req"
+                  style={{ color: "#f44336" }}
+                >
                   {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
               )}
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

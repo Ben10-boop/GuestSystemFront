@@ -201,6 +201,19 @@ const AddFormByGuest = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
+              <TextField
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {error && email !== "" && !emailRegEx.test(email) ? (
+                <label style={{ color: "#f44336" }}>
+                  {t("err_invalid_email")}
+                </label>
+              ) : (
+                ""
+              )}
               <InputLabel>{t("purpose")}</InputLabel>
               <TextField
                 type="text"
@@ -279,26 +292,6 @@ const AddFormByGuest = () => {
                 onChange={handleCheckBoxTick}
                 inputProps={{ "aria-label": "controlled" }}
               /> */}
-              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
-              <TextField
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {/* {error && checked && email === "" ? (
-                <label style={{ color: "#f44336" }}>
-                  {t("err_email_req_if_wifi")}
-                </label>
-              ) : (
-                ""
-              )} */}
-              {error && email !== "" && !emailRegEx.test(email) ? (
-                <label style={{ color: "#f44336" }}>
-                  {t("err_invalid_email")}
-                </label>
-              ) : (
-                ""
-              )}
               {emptyError ? (
                 <label style={{ color: "#f44336" }}>
                   {t("err_all_fields_req")}

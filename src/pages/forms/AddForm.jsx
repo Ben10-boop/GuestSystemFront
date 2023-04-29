@@ -89,11 +89,7 @@ const AddForm = () => {
         email,
         purpose,
         entranceTimeDate,
-        entranceTimeHour,
-        entranceTimeMinute,
         departureTimeDate,
-        departureTimeHour,
-        departureTimeMinute,
         visiteeId,
       ].includes("")
     ) {
@@ -139,12 +135,37 @@ const AddForm = () => {
               <Typography variant="h5">{t("add_form")}</Typography>
               <InputLabel>{t("guest_name")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "guest_name_field",
+                }}
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
+              <TextField
+                inputProps={{
+                  "data-testid": "email_field",
+                }}
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {error && email !== "" && !emailRegEx.test(email) ? (
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="invalid_email_err"
+                >
+                  {t("err_invalid_email")}
+                </label>
+              ) : (
+                ""
+              )}
               <InputLabel>{t("purpose")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "purpose_field",
+                }}
                 type="text"
                 value={purpose}
                 onChange={(e) => setPurpose(e.target.value)}
@@ -154,6 +175,9 @@ const AddForm = () => {
               </InputLabel>
               <Box display="flex">
                 <TextField
+                  inputProps={{
+                    "data-testid": "entr_time_date_field",
+                  }}
                   sx={{
                     padding: "2px",
                   }}
@@ -162,6 +186,9 @@ const AddForm = () => {
                   onChange={(e) => setEntranceTimeDate(e.target.value)}
                 />
                 <Select
+                  inputProps={{
+                    "data-testid": "entr_time_hour_field",
+                  }}
                   sx={{
                     margin: "2px",
                   }}
@@ -177,6 +204,9 @@ const AddForm = () => {
                   })}
                 </Select>
                 <Select
+                  inputProps={{
+                    "data-testid": "entr_time_min_field",
+                  }}
                   sx={{
                     margin: "2px",
                   }}
@@ -197,6 +227,9 @@ const AddForm = () => {
               </InputLabel>
               <Box display="flex">
                 <TextField
+                  inputProps={{
+                    "data-testid": "depart_time_date_field",
+                  }}
                   sx={{
                     padding: "2px",
                   }}
@@ -205,6 +238,9 @@ const AddForm = () => {
                   onChange={(e) => setDepartureTimeDate(e.target.value)}
                 />
                 <Select
+                  inputProps={{
+                    "data-testid": "depart_time_hour_field",
+                  }}
                   sx={{
                     margin: "2px",
                   }}
@@ -220,6 +256,9 @@ const AddForm = () => {
                   })}
                 </Select>
                 <Select
+                  inputProps={{
+                    "data-testid": "depart_time_min_field",
+                  }}
                   sx={{
                     margin: "2px",
                   }}
@@ -237,52 +276,33 @@ const AddForm = () => {
               </Box>
               <InputLabel>{t("empl_being_visited")}</InputLabel>
               <Select
+                inputProps={{
+                  "data-testid": "visitee_field",
+                }}
                 id="statusSelectThing"
                 value={visiteeId}
                 onChange={(e) => setVisiteeId(e.target.value)}
               >
                 {visitees.map((item) => {
                   return (
-                    <MenuItem key={item.id} value={item.id}>
+                    <option key={item.id} value={item.id}>
                       {item.name}
-                    </MenuItem>
+                    </option>
                   );
                 })}
               </Select>
-              {/* <InputLabel id="maxPayloadInput">{t("need_wifi")}</InputLabel>
-              <Checkbox
-                checked={checked}
-                onChange={handleCheckBoxTick}
-                inputProps={{ "aria-label": "controlled" }}
-              /> */}
-              <InputLabel id="maxPayloadInput">{t("email")}</InputLabel>
-              <TextField
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {error && checked && email === "" ? (
-                <label style={{ color: "#f44336" }}>
-                  {t("err_email_req_if_wifi")}
-                </label>
-              ) : (
-                ""
-              )}
-              {error && email !== "" && !emailRegEx.test(email) ? (
-                <label style={{ color: "#f44336" }}>
-                  {t("err_invalid_email")}
-                </label>
-              ) : (
-                ""
-              )}
               {emptyError ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  data-testid="err_all_fields_req"
+                  style={{ color: "#f44336" }}
+                >
                   {t("err_all_fields_req")}
                 </label>
               ) : (
                 ""
               )}
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

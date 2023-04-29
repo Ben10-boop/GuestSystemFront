@@ -77,6 +77,9 @@ const EditVisitee = () => {
                 {t("name")} : {details["name"]}
               </InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "name_field",
+                }}
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -85,12 +88,18 @@ const EditVisitee = () => {
                 {t("email")} : {details["email"]}
               </InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "email_field",
+                }}
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {error && !emailRegEx.test(email) ? (
-                <label style={{ color: "#f44336" }}>
+              {error && !emailRegEx.test(email) && email !== "" ? (
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="err_invalid_email"
+                >
                   {t("err_invalid_email")}
                 </label>
               ) : (
@@ -100,6 +109,9 @@ const EditVisitee = () => {
                 {t("status")} : {details["status"]}
               </InputLabel>
               <Select
+                inputProps={{
+                  "data-testid": "status_field",
+                }}
                 id="statusSelectThing"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
@@ -108,6 +120,7 @@ const EditVisitee = () => {
                 <MenuItem value={"unvisitable"}>Unvisitable</MenuItem>
               </Select>
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

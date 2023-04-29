@@ -83,6 +83,9 @@ const EditAdmin = () => {
                 {t("name")} : {details["name"]}
               </InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "name_field",
+                }}
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -91,12 +94,18 @@ const EditAdmin = () => {
                 {t("email")} : {details["email"]}
               </InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "email_field",
+                }}
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               {error && !emailRegEx.test(email) && email !== "" ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="err_invalid_email"
+                >
                   {t("err_invalid_email")}
                 </label>
               ) : (
@@ -104,24 +113,34 @@ const EditAdmin = () => {
               )}
               <InputLabel>{t("password")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "password_field",
+                }}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <InputLabel>{t("password_conf")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "password_conf_field",
+                }}
                 type="password"
                 value={passwordConf}
                 onChange={(e) => setPasswordConf(e.target.value)}
               />
               {error && password !== passwordConf ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  style={{ color: "#f44336" }}
+                  data-testid="err_passwords_match"
+                >
                   {t("err_pass_match")}
                 </label>
               ) : (
                 ""
               )}
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

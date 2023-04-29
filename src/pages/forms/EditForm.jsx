@@ -131,7 +131,7 @@ const EditForm = () => {
   const getDateString = (date, hour, minute) => {
     const adjustedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const adjustedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-    return new Date(`${date}T${adjustedHour}:${adjustedMinute}`).toUTCString;
+    return new Date(`${date}T${adjustedHour}:${adjustedMinute}`).toJSON();
   };
 
   const handleCheckBoxTick = (e) => {
@@ -202,14 +202,41 @@ const EditForm = () => {
                       {t("guest_name")} : {details["name"]}
                     </InputLabel>
                     <TextField
+                      inputProps={{
+                        "data-testid": "guest_name_field",
+                      }}
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
                     <InputLabel>
+                      {t("email")} : {details["email"]}
+                    </InputLabel>
+                    <TextField
+                      inputProps={{
+                        "data-testid": "email_field",
+                      }}
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {email !== "" && !emailRegEx.test(email) ? (
+                      <label
+                        data-testid="invalid_email_err"
+                        style={{ color: "#f44336" }}
+                      >
+                        {t("err_invalid_email")}
+                      </label>
+                    ) : (
+                      ""
+                    )}
+                    <InputLabel>
                       {t("purpose")} : {details["visitPurpose"]}
                     </InputLabel>
                     <TextField
+                      inputProps={{
+                        "data-testid": "purpose-field",
+                      }}
                       type="text"
                       value={purpose}
                       onChange={(e) => setPurpose(e.target.value)}
@@ -225,6 +252,9 @@ const EditForm = () => {
                     </InputLabel>
                     <Box display="flex">
                       <TextField
+                        inputProps={{
+                          "data-testid": "entr_time_date_field",
+                        }}
                         sx={{
                           padding: "2px",
                         }}
@@ -233,6 +263,9 @@ const EditForm = () => {
                         onChange={(e) => setEntranceTimeDate(e.target.value)}
                       />
                       <Select
+                        inputProps={{
+                          "data-testid": "entr_time_hour_field",
+                        }}
                         sx={{
                           margin: "2px",
                         }}
@@ -248,6 +281,9 @@ const EditForm = () => {
                         })}
                       </Select>
                       <Select
+                        inputProps={{
+                          "data-testid": "entr_time_min_field",
+                        }}
                         sx={{
                           margin: "2px",
                         }}
@@ -274,6 +310,9 @@ const EditForm = () => {
                     </InputLabel>
                     <Box display="flex">
                       <TextField
+                        inputProps={{
+                          "data-testid": "depart_time_date_field",
+                        }}
                         sx={{
                           padding: "2px",
                         }}
@@ -282,6 +321,9 @@ const EditForm = () => {
                         onChange={(e) => setDepartureTimeDate(e.target.value)}
                       />
                       <Select
+                        inputProps={{
+                          "data-testid": "depart_time_hour_field",
+                        }}
                         sx={{
                           margin: "2px",
                         }}
@@ -297,6 +339,9 @@ const EditForm = () => {
                         })}
                       </Select>
                       <Select
+                        inputProps={{
+                          "data-testid": "depart_time_min_field",
+                        }}
                         sx={{
                           margin: "2px",
                         }}
@@ -349,32 +394,8 @@ const EditForm = () => {
                 ) : (
                   ""
                 )} */}
-                    <InputLabel>
-                      {t("email")} : {details["email"]}
-                    </InputLabel>
-                    <TextField
-                      type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {error &&
-                    checked &&
-                    details["wifiAccessStatus"] === "not requested" &&
-                    email === "" ? (
-                      <label style={{ color: "#f44336" }}>
-                        {t("err_email_req_if_wifi")}
-                      </label>
-                    ) : (
-                      ""
-                    )}
-                    {email !== "" && !emailRegEx.test(email) ? (
-                      <label style={{ color: "#f44336" }}>
-                        {t("err_invalid_email")}
-                      </label>
-                    ) : (
-                      ""
-                    )}
                     <LoadingButton
+                      data-testid="submit_button"
                       variant="contained"
                       loading={isLoading}
                       type="submit"

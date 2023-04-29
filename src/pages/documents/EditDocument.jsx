@@ -7,6 +7,7 @@ import {
   Container,
   Typography,
   Paper,
+  Grid,
   Box,
   InputLabel,
   Select,
@@ -98,87 +99,109 @@ const EditDocument = () => {
 
   return (
     <div>
-      <Container maxWidth="xs">
-        <Paper elevation={6}>
-          <Box
+      <Grid container columns={{ sm: 4, md: 8 }}>
+        <Grid item sm={4} md={3}>
+          <Container
+            maxWidth="xs"
             sx={{
-              padding: "24px",
+              paddingTop: "50px",
             }}
           >
-            <form onSubmit={handleEditDocument}>
-              <Stack spacing={2}>
-                <Typography variant="h5">
-                  {t("view_edit_document")} {params.identifier}
-                </Typography>
-                <InputLabel>
-                  {t("title")} : {details["title"]}
-                </InputLabel>
-                <TextField
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <InputLabel>
-                  {t("status")} : {details["status"]}
-                </InputLabel>
-                <Select
-                  id="statusSelectThing"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <MenuItem value={"active"}>Active</MenuItem>
-                  <MenuItem value={"inactive"}>Inactive</MenuItem>
-                </Select>
-                <InputLabel>{t("doc_content_expl")}</InputLabel>
-                <input
-                  type="file"
-                  name="file"
-                  accept="application/pdf"
-                  onChange={(e) => handleFileUpload(e)}
-                />
-                {error && uplFile.type !== "application/pdf" ? (
-                  <label style={{ color: "#f44336" }}>
-                    {t("err_file_must_be_pdf")}
-                  </label>
-                ) : (
-                  ""
-                )}
-                <LoadingButton
-                  variant="contained"
-                  loading={isLoading}
-                  type="submit"
-                >
-                  {t("submit")}
-                </LoadingButton>
-              </Stack>
-            </form>
-          </Box>
-        </Paper>
-      </Container>
-      <div className="Example__container">
-        <div className="Example__container__document">
-          <Document
-            file={details["content"]}
-            onLoadSuccess={onDocumentLoadSuccess}
-            options={options}
-          >
-            <Page pageNumber={pageNumber} />
-          </Document>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="10vh"
-          >
-            <Pagination
-              justifycontent="center"
-              count={numPages}
-              page={pageNumber}
-              onChange={handleChangePage}
-            ></Pagination>
-          </Box>
-        </div>
-      </div>
+            <Paper elevation={6}>
+              <Box
+                sx={{
+                  padding: "24px",
+                }}
+              >
+                <form onSubmit={handleEditDocument}>
+                  <Stack spacing={2}>
+                    <Typography variant="h5">
+                      {t("view_edit_document")} {params.identifier}
+                    </Typography>
+                    <InputLabel>
+                      {t("title")} : {details["title"]}
+                    </InputLabel>
+                    <TextField
+                      inputProps={{
+                        "data-testid": "title_field",
+                      }}
+                      type="text"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <InputLabel>
+                      {t("status")} : {details["status"]}
+                    </InputLabel>
+                    <Select
+                      inputProps={{
+                        "data-testid": "status_field",
+                      }}
+                      id="statusSelectThing"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <MenuItem value={"active"}>Active</MenuItem>
+                      <MenuItem value={"inactive"}>Inactive</MenuItem>
+                    </Select>
+                    <InputLabel>{t("doc_content_expl")}</InputLabel>
+                    <input
+                      data-testid="file_upload_field"
+                      type="file"
+                      name="file"
+                      accept="application/pdf"
+                      onChange={(e) => handleFileUpload(e)}
+                    />
+                    {error && uplFile.type !== "application/pdf" ? (
+                      <label
+                        data-testid="err_file_must_be_pdf"
+                        style={{ color: "#f44336" }}
+                      >
+                        {t("err_file_must_be_pdf")}
+                      </label>
+                    ) : (
+                      ""
+                    )}
+                    <LoadingButton
+                      data-testid="submit_button"
+                      variant="contained"
+                      loading={isLoading}
+                      type="submit"
+                    >
+                      {t("submit")}
+                    </LoadingButton>
+                  </Stack>
+                </form>
+              </Box>
+            </Paper>
+          </Container>
+        </Grid>
+        <Grid item sm={4} md={5}>
+          <div className="Example__container">
+            <div className="Example__container__document">
+              <Document
+                file={details["content"]}
+                onLoadSuccess={onDocumentLoadSuccess}
+                options={options}
+              >
+                <Page pageNumber={pageNumber} />
+              </Document>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="10vh"
+              >
+                <Pagination
+                  justifycontent="center"
+                  count={numPages}
+                  page={pageNumber}
+                  onChange={handleChangePage}
+                ></Pagination>
+              </Box>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

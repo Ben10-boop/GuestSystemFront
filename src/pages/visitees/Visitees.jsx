@@ -109,7 +109,7 @@ const Visitees = () => {
             <TableBody>
               {visitees.map((item) => {
                 return (
-                  <TableRow key={item.id}>
+                  <TableRow key={item.id} data-testid={`table_row_${item.id}`}>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.email}</TableCell>
@@ -125,6 +125,7 @@ const Visitees = () => {
                     </TableCell>
                     <TableCell>
                       <Button
+                        data-testid={`table_delete_dialog_btn_${item.id}`}
                         onClick={() => {
                           handleOpenDialog(item.id);
                         }}
@@ -145,7 +146,10 @@ const Visitees = () => {
                           <Button onClick={() => handleCloseDialog()}>
                             {t("no")}
                           </Button>
-                          <Button onClick={() => handleDeleteVisitee(item.id)}>
+                          <Button
+                            data-testid={`table_delete_conf_btn_${item.id}`}
+                            onClick={() => handleDeleteVisitee(item.id)}
+                          >
                             {t("yes")}
                           </Button>
                         </DialogActions>

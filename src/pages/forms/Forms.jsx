@@ -114,7 +114,7 @@ const Forms = () => {
             <TableBody>
               {Forms.map((item) => {
                 return (
-                  <TableRow key={item.id}>
+                  <TableRow key={item.id} data-testid={`table_row_${item.id}`}>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.visitPurpose}</TableCell>
@@ -152,6 +152,7 @@ const Forms = () => {
                       {userRole === "super" ? (
                         <Box>
                           <Button
+                            data-testid={`table_delete_dialog_btn_${item.id}`}
                             onClick={() => {
                               handleOpenDialog(item.id);
                             }}
@@ -175,7 +176,10 @@ const Forms = () => {
                               <Button onClick={() => handleCloseDialog()}>
                                 {t("no")}
                               </Button>
-                              <Button onClick={() => handleDeleteForm(item.id)}>
+                              <Button
+                                data-testid={`table_delete_conf_btn_${item.id}`}
+                                onClick={() => handleDeleteForm(item.id)}
+                              >
                                 {t("yes")}
                               </Button>
                             </DialogActions>

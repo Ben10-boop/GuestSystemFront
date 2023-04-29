@@ -27,13 +27,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (
-      [
-        !emailRegEx.test(email),
-        email.length === 0,
-        password.length < 9,
-      ].includes(true)
-    ) {
+    if ([!emailRegEx.test(email), email.length === 0].includes(true)) {
       setError(true);
       return;
     }
@@ -63,12 +57,18 @@ const Login = () => {
               <Typography variant="h4">{t("admin_login")}</Typography>
               <InputLabel id="emailItem">{t("email")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "email_field",
+                }}
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               {error && !emailRegEx.test(email) ? (
-                <label style={{ color: "#f44336" }}>
+                <label
+                  data-testid="err_invalid_email"
+                  style={{ color: "#f44336" }}
+                >
                   {t("err_invalid_email")}
                 </label>
               ) : (
@@ -76,18 +76,15 @@ const Login = () => {
               )}
               <InputLabel id="passItem">{t("password")}</InputLabel>
               <TextField
+                inputProps={{
+                  "data-testid": "password_field",
+                }}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {error && password.length < 9 ? (
-                <label style={{ color: "#f44336" }}>
-                  {t("err_pass_too_short")}
-                </label>
-              ) : (
-                ""
-              )}
               <LoadingButton
+                data-testid="submit_button"
                 variant="contained"
                 loading={isLoading}
                 type="submit"

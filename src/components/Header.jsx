@@ -33,8 +33,6 @@ export default function Header() {
     links = [
       { key: "begin_visit", value: "forms/guestadd" },
       { key: "end_visit", value: "forms/endvisit" },
-      { key: "home", value: "/" },
-      { key: "admin_login", value: "/login" },
     ];
   } else if (["super"].includes(userRole)) {
     links = [
