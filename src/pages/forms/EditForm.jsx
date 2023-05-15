@@ -131,7 +131,16 @@ const EditForm = () => {
   const getDateString = (date, hour, minute) => {
     const adjustedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const adjustedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-    return new Date(`${date}T${adjustedHour}:${adjustedMinute}`).toJSON();
+    console.log(hour);
+    console.log(minute);
+    console.log(adjustedHour);
+    console.log(adjustedMinute);
+    let x = new Date(`${date}T${adjustedHour}:${adjustedMinute}`);
+    let hoursDiff = x.getHours() - x.getTimezoneOffset() / 60;
+    let minutesDiff = (x.getHours() - x.getTimezoneOffset()) % 60;
+    x.setHours(hoursDiff);
+    x.setMinutes(minutesDiff);
+    return x.toJSON();
   };
 
   const handleCheckBoxTick = (e) => {

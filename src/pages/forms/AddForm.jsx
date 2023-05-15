@@ -285,9 +285,9 @@ const AddForm = () => {
               >
                 {visitees.map((item) => {
                   return (
-                    <option key={item.id} value={item.id}>
+                    <MenuItem key={item.id} value={item.id}>
                       {item.name}
-                    </option>
+                    </MenuItem>
                   );
                 })}
               </Select>
